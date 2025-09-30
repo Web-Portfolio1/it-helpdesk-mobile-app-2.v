@@ -1,0 +1,4753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IT Helpdesk Support Assistant</title>
+    <meta name="description" content="IT Helpdesk Support Assistant for creating and managing support tickets">
+    <meta name="theme-color" content="#3498db">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="IT Helpdesk">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📱</text></svg>">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogSVQgSGVscGRlc2sgU3VwcG9ydCBBc3Npc3RhbnQiLAogICJzaG9ydF9uYW1lIjogSVQgSGVscGRlc2siLAogICJkZXNjcmlwdGlvbiI6ICJJVCBIZWxwZGVzayBTdXBwb3J0IEFzc2lzdGFudCBmb3IgY3JlYXRpbmcgYW5kIG1hbmFnaW5nIHN1cHBvcnQgdGlja2V0cyIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAidGhlbWVfY29sb3IiOiAiIzM0OThkYiIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnPjx0ZXh0IHk9Jy45ZW0nIGZvbnQtc2l6ZT0nOTAnPjx0ZXh0IHg9Jy41ZW0nIHk9Jy45ZW0nIGZvbnQtZmFtaWx5PSdBcmlhbCcgZm9udC1zaXplPSc3MCcgZmlsbD0nIzM0OThkYic+SVQ8L3RleHQ+PC90ZXh0Pjwvc3ZnPg==",
+ICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOWVtJyBmb250LXNpemU9JzkwJz48dGV4dCB4PScuNWVtJyB5PScuOWVtJyBmb250LWZhbWlseT0nQXJpYWwnIGZvbnQtc2l6ZT0nMTAwJyBmaWxsPScjMzQ5OGRiJz5JVDwvdGV4dD48L3RleHQ+PC9zdmc+",
+ICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    
+    <style>
+        /* Mobile-first responsive design */
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            /* Light mode colors */
+            --bg-primary: #f5f7fa;
+            --container-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #2c3e50, #3498db);
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --text-white: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #dfe6e9;
+            --input-focus: #3498db;
+            --button-bg: linear-gradient(135deg, #3498db, #2980b9);
+            --message-bg-user: linear-gradient(135deg, #3498db, #2980b9);
+            --message-bg-bot: #f8f9fa;
+            --message-border: #e9ecef;
+            --chat-input-bg: #f8f9fa;
+            --options-bg: #f8f9fa;
+            --options-border: #e9ecef;
+            --error-bg: #ffebee;
+            --error-text: #e74c3c;
+            --notification-bg: linear-gradient(135deg, #2c3e50, #3498db);
+            --ticket-notice-bg: #e3f2fd;
+            --ticket-notice-border: #2196f3;
+            --engineer-assignment-bg: #e8f5e9;
+            --engineer-assignment-border: #4caf50;
+            --engineer-name-color: #2e7d32;
+            --engineer-status-color: #558b2f;
+            --engineer-on-the-way-bg: #e3f2fd;
+            --engineer-on-the-way-border: #2196f3;
+            --engineer-on-the-way-name-color: #1565c0;
+            --engineer-on-the-way-status-color: #0d47a1;
+            --ticket-assignment-bg: #fff3e0;
+            --ticket-assignment-border: #ff9800;
+            --ticket-assignment-header-color: #e65100;
+            --ticket-resolution-bg: #e8f5e9;
+            --ticket-resolution-border: #4caf50;
+            --ticket-resolution-header-color: #2e7d32;
+            --ticket-resolution-meta-color: #558b2f;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --radius: 12px;
+        }
+        
+        /* Dark mode colors */
+        [data-theme="dark"] {
+            --bg-primary: #1a1a2e;
+            --container-bg: #1e1e2e;
+            --header-bg: linear-gradient(135deg, #2d3561, #1e2749);
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-white: #e0e0e0;
+            --input-bg: #2d2d3d;
+            --input-border: #444;
+            --input-focus: #3498db;
+            --button-bg: linear-gradient(135deg, #3498db, #2980b9);
+            --message-bg-user: linear-gradient(135deg, #3498db, #2980b9);
+            --message-bg-bot: #2d2d3d;
+            --message-border: #444;
+            --chat-input-bg: #2d2d3d;
+            --options-bg: #2d2d3d;
+            --options-border: #444;
+            --error-bg: #3d2828;
+            --error-text: #ff6b6b;
+            --notification-bg: linear-gradient(135deg, #2c3e50, #3498db);
+            --ticket-notice-bg: #3d3228;
+            --ticket-notice-border: #ff9800;
+            --engineer-assignment-bg: #2d3d2d;
+            --engineer-assignment-border: #4caf50;
+            --engineer-name-color: #81c784;
+            --engineer-status-color: #a5d6a7;
+            --engineer-on-the-way-bg: #2d3d4d;
+            --engineer-on-the-way-border: #2196f3;
+            --engineer-on-the-way-name-color: #90caf9;
+            --engineer-on-the-way-status-color: #64b5f6;
+            --ticket-assignment-bg: #3d3228;
+            --ticket-assignment-border: #ff9800;
+            --ticket-assignment-header-color: #ffb74d;
+            --ticket-resolution-bg: #2d3d2d;
+            --ticket-resolution-border: #4caf50;
+            --ticket-resolution-header-color: #81c784;
+            --ticket-resolution-meta-color: #a5d6a7;
+            --shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        body {
+            background: var(--bg-primary);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        
+        /* Mobile App Header */
+        .mobile-app-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 10px 15px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .mobile-app-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: var(--container-bg);
+            box-shadow: var(--shadow);
+            transition: left 0.3s ease;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .mobile-nav.open {
+            left: 0;
+        }
+        
+        .mobile-nav-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .mobile-nav-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--options-border);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-nav-item:hover {
+            background: var(--options-bg);
+        }
+        
+        .mobile-nav-item svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .mobile-nav-overlay.show {
+            display: block;
+        }
+        
+        /* PWA Install Banner */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1002;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .pwa-install-banner.show {
+            transform: translateY(0);
+        }
+        
+        .pwa-install-text {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+        
+        .pwa-install-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-white);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .pwa-install-dismiss {
+            background: none;
+            border: none;
+            color: var(--text-white);
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--header-bg);
+            color: var(--text-white);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.05);
+        }
+        
+        .theme-toggle svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--text-white);
+        }
+        
+        /* Connection Status */
+        #connection-status {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            z-index: 1002;
+            background: #2ecc71;
+            color: white;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+        
+        /* Sync Button */
+        .sync-button {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            z-index: 1000;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .sync-button:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Login Container */
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--container-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .login-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 30px 25px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .login-header-icon {
+            margin-right: 12px;
+            width: 36px;
+            height: 36px;
+        }
+        
+        .login-form {
+            padding: 40px 35px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        .form-input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--button-bg);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .error-message {
+            color: var(--error-text);
+            font-size: 13px;
+            margin-top: 8px;
+            display: none;
+            background-color: var(--error-bg);
+            padding: 10px;
+            border-radius: 6px;
+        }
+        
+        .login-help {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        /* Mobile Download Section */
+        .mobile-download-section {
+            background: var(--container-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .download-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .download-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            background: var(--button-bg);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .download-btn.secondary {
+            background: var(--options-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--options-border);
+        }
+        
+        .download-btn.secondary:hover {
+            background: var(--input-border);
+        }
+        
+        .qr-code {
+            margin: 20px auto;
+            width: 150px;
+            height: 150px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            width: 100%;
+            max-width: 520px;
+            background: var(--container-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+        
+        .chat-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            letter-spacing: 0.5px;
+        }
+        
+        .chat-header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-header-icon {
+            margin-right: 10px;
+            width: 32px;
+            height: 32px;
+        }
+        
+        .user-welcome {
+            font-size: 14px;
+            color: var(--text-white);
+            opacity: 0.9;
+            font-weight: 400;
+            margin-top: 4px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .header-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-white);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .header-btn svg {
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .chat-messages {
+            height: 420px;
+            overflow-y: auto;
+            padding: 25px;
+            background: var(--chat-input-bg);
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user-message {
+            align-items: flex-end;
+        }
+        
+        .bot-message {
+            align-items: flex-start;
+        }
+        
+        .message-text {
+            padding: 16px 20px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .user-message .message-text {
+            background: var(--message-bg-user);
+            color: var(--text-white);
+            border-bottom-right-radius: 6px;
+        }
+        
+        .bot-message .message-text {
+            background: var(--message-bg-bot);
+            color: var(--text-primary);
+            border-bottom-left-radius: 6px;
+            border: 1px solid var(--message-border);
+        }
+        
+        .chat-input-container {
+            padding: 20px;
+            background: var(--chat-input-bg);
+            border-top: 1px solid var(--options-border);
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        #user-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 1px solid var(--input-border);
+            border-radius: 30px;
+            outline: none;
+            font-size: 15px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        #user-input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .input-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: var(--button-bg);
+            color: var(--text-white);
+            border: none;
+            border-radius: 30px;
+            padding: 0 16px;
+            height: 48px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            white-space: nowrap;
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .action-btn svg {
+            margin-right: 6px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        #send-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            padding: 0;
+            justify-content: center;
+        }
+        
+        .file-attachment-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--options-bg);
+            border-radius: 8px;
+            border: 1px solid var(--options-border);
+        }
+        
+        .file-attachment {
+            display: flex;
+            align-items: center;
+            background: var(--container-bg);
+            border-radius: 6px;
+            padding: 8px;
+            border: 1px solid var(--options-border);
+            max-width: 200px;
+        }
+        
+        .file-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        
+        .file-icon.image {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .file-icon.pdf {
+            background: #F44336;
+            color: white;
+        }
+        
+        .file-icon.document {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .file-icon.default {
+            background: #9E9E9E;
+            color: white;
+        }
+        
+        .file-info {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+        
+        .file-name {
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .file-size {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--error-text);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 5px;
+            line-height: 1;
+        }
+        
+        .options-container {
+            padding: 20px;
+            background: var(--options-bg);
+            border-top: 1px solid var(--options-border);
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .options-full {
+            grid-column: 1 / -1;
+        }
+        
+        .options-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .options-dropdown {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            font-size: 14px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        .options-dropdown:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .typing-indicator {
+            display: none;
+            padding: 15px;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-size: 14px;
+        }
+        
+        .ticket-notice {
+            background: var(--ticket-notice-bg);
+            border-left: 4px solid var(--ticket-notice-border);
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--notification-bg);
+            color: var(--text-white);
+            padding: 18px 25px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(44, 62, 80, 0.3);
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.4s ease;
+            font-weight: 500;
+        }
+        
+        .notification.show {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .sender-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .sender-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .engineer-assignment {
+            background: var(--engineer-assignment-bg);
+            border-left: 4px solid var(--engineer-assignment-border);
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .engineer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .engineer-info {
+            flex-grow: 1;
+        }
+        
+        .engineer-name {
+            font-weight: 600;
+            color: var(--engineer-name-color);
+            margin-bottom: 4px;
+        }
+        
+        .engineer-status {
+            font-size: 13px;
+            color: var(--engineer-status-color);
+            line-height: 1.4;
+        }
+        
+        .engineer-eta {
+            font-size: 13px;
+            color: var(--engineer-status-color);
+            margin-top: 6px;
+        }
+        
+        .engineer-on-the-way {
+            background: var(--engineer-on-the-way-bg);
+            border-left: 4px solid var(--engineer-on-the-way-border);
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .engineer-on-the-way .engineer-avatar {
+            background: #2196f3;
+        }
+        
+        .engineer-on-the-way .engineer-name {
+            color: var(--engineer-on-the-way-name-color);
+        }
+        
+        .engineer-on-the-way .engineer-status {
+            color: var(--engineer-on-the-way-status-color);
+        }
+        
+        .engineer-on-the-way .engineer-eta {
+            color: var(--engineer-on-the-way-status-color);
+        }
+        
+        .ticket-assignment {
+            background: var(--ticket-assignment-bg);
+            border-left: 4px solid var(--ticket-assignment-border);
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .ticket-assignment-header {
+            font-weight: 600;
+            color: var(--ticket-assignment-header-color);
+            margin-bottom: 8px;
+        }
+        
+        .ticket-assignment-details {
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .ticket-resolution {
+            background: var(--ticket-resolution-bg);
+            border-left: 4px solid var(--ticket-resolution-border);
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .ticket-resolution-header {
+            font-weight: 600;
+            color: var(--ticket-resolution-header-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ticket-resolution-header::before {
+            content: "✓";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .ticket-resolution-details {
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .ticket-meta {
+            font-size: 13px;
+            color: var(--ticket-resolution-meta-color);
+            margin-top: 8px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1003;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background-color: var(--container-bg);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .close {
+            color: var(--text-white);
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: none;
+        }
+        
+        .close:hover {
+            opacity: 0.7;
+        }
+        
+        .modal-body {
+            padding: 25px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .issue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .issue-item {
+            background: var(--options-bg);
+            border: 1px solid var(--options-border);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .issue-item:hover {
+            background: var(--input-focus);
+            color: var(--text-white);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .issue-item.selected {
+            background: var(--button-bg);
+            color: var(--text-white);
+            border-color: var(--input-focus);
+        }
+        
+        .modal-footer {
+            padding: 15px 25px;
+            background: var(--options-bg);
+            border-top: 1px solid var(--options-border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .modal-btn-primary {
+            background: var(--button-bg);
+            color: var(--text-white);
+        }
+        
+        .modal-btn-primary:hover {
+            opacity: 0.9;
+        }
+        
+        .modal-btn-secondary {
+            background: var(--options-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--options-border);
+        }
+        
+        .modal-btn-secondary:hover {
+            background: var(--input-border);
+        }
+        
+        /* Ticket History Modal Styles */
+        .ticket-history-modal {
+            display: none;
+            position: fixed;
+            z-index: 1004;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .ticket-history-content {
+            background-color: var(--container-bg);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+        
+        .ticket-history-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ticket-history-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .ticket-history-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .ticket-history-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .ticket-history-search {
+            flex-grow: 1;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .ticket-history-search input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .ticket-history-search input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .ticket-history-filter {
+            display: flex;
+            align-items: center;
+        }
+        
+        .ticket-history-filter select {
+            padding: 10px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .ticket-history-filter select:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .ticket-table-container {
+            overflow-x: auto;
+        }
+        
+        .ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .ticket-table th, .ticket-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--options-border);
+        }
+        
+        .ticket-table th {
+            background: var(--options-bg);
+            font-weight: 600;
+            color: var(--text-primary);
+            position: sticky;
+            top: 0;
+        }
+        
+        .ticket-table tr:hover {
+            background: var(--options-bg);
+        }
+        
+        .ticket-id {
+            font-weight: 600;
+            color: var(--input-focus);
+        }
+        
+        .ticket-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .ticket-status.open {
+            background: #ffebee;
+            color: #e74c3c;
+        }
+        
+        .ticket-status.in-progress {
+            background: #fff8e1;
+            color: #ff9800;
+        }
+        
+        .ticket-status.resolved {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+        
+        .ticket-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .ticket-action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .ticket-reopen-btn {
+            background: #3498db;
+            color: white;
+        }
+        
+        .ticket-reopen-btn:hover {
+            background: #2980b9;
+        }
+        
+        .ticket-view-btn {
+            background: var(--options-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--options-border);
+        }
+        
+        .ticket-view-btn:hover {
+            background: var(--input-border);
+        }
+        
+        /* Notification Preferences Modal Styles */
+        .notification-prefs-modal {
+            display: none;
+            position: fixed;
+            z-index: 1005;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .notification-prefs-content {
+            background-color: var(--container-bg);
+            margin: 10% auto;
+            padding: 0;
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .notification-prefs-header {
+            background: var(--header-bg);
+            color: var(--text-white);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .notification-prefs-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .notification-prefs-body {
+            padding: 25px;
+        }
+        
+        .prefs-section {
+            margin-bottom: 25px;
+        }
+        
+        .prefs-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .prefs-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--options-border);
+        }
+        
+        .prefs-option:last-child {
+            border-bottom: none;
+        }
+        
+        .prefs-label {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        
+        .prefs-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 24px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #3498db;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .quiet-hours {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .time-input {
+            flex: 1;
+        }
+        
+        .time-input label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: var(--text-primary);
+        }
+        
+        .time-input input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 6px;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+        
+        .time-input input:focus {
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        /* SLA Tracking Styles */
+        .sla-indicator {
+            margin-top: 8px;
+            height: 8px;
+            background: var(--options-border);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .sla-progress {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s linear, background-color 1s linear;
+        }
+        
+        .sla-progress.high {
+            background: #4caf50;
+        }
+        
+        .sla-progress.medium {
+            background: #ff9800;
+        }
+        
+        .sla-progress.low {
+            background: #e74c3c;
+        }
+        
+        .sla-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .sla-remaining {
+            font-weight: 500;
+        }
+        
+        .sla-deadline {
+            font-weight: 500;
+        }
+        
+        /* Sound notification */
+        .sound-notification {
+            display: none;
+        }
+        
+        /* File attachment in message */
+        .message-attachments {
+            margin-top: 10px;
+        }
+        
+        .message-attachment {
+            display: inline-flex;
+            align-items: center;
+            background: var(--options-bg);
+            border-radius: 6px;
+            padding: 6px 10px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--options-border);
+        }
+        
+        .message-attachment:hover {
+            background: var(--input-border);
+        }
+        
+        .message-attachment-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            margin-right: 6px;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+        
+        .message-attachment-name {
+            font-size: 12px;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Feedback Form Styles */
+        .feedback-form {
+            background: var(--options-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid var(--options-border);
+            animation: slideUp 0.4s ease;
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .feedback-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .feedback-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        
+        .feedback-rating {
+            margin: 20px 0;
+        }
+        
+        .rating-question {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .rating-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .rating-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 10px;
+            border-radius: 8px;
+            width: 18%;
+        }
+        
+        .rating-option:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        .rating-option.selected {
+            background: rgba(52, 152, 219, 0.2);
+        }
+        
+        .rating-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .rating-label {
+            font-size: 14px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .feedback-comment {
+            margin-bottom: 20px;
+        }
+        
+        .comment-label {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .comment-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            background: var(--input-bg);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        
+        .comment-textarea:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .char-counter {
+            text-align: right;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .feedback-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--button-bg);
+            color: var(--text-white);
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .feedback-submit:hover {
+            opacity: 0.9;
+        }
+        
+        .feedback-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .feedback-success {
+            text-align: center;
+            padding: 15px;
+            color: var(--text-primary);
+        }
+        
+        .feedback-success-icon {
+            font-size: 36px;
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-success-message {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Service status indicator */
+        .service-status {
+            position: fixed;
+            top: 140px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            z-index: 1000;
+            background: #f39c12;
+            color: white;
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .service-status.show {
+            display: block;
+        }
+        
+        .service-status.online {
+            background: #2ecc71;
+        }
+        
+        .service-status.offline {
+            background: #f39c12;
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .login-container, .chat-container {
+                max-width: 100%;
+                border-radius: 8px;
+            }
+            
+            .chat-header {
+                padding: 15px;
+                font-size: 16px;
+            }
+            
+            .chat-header-title {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .chat-header-icon {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+            
+            .user-welcome {
+                font-size: 12px;
+            }
+            
+            .header-actions {
+                margin-top: 10px;
+            }
+            
+            .header-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            
+            .chat-messages {
+                height: 300px;
+                padding: 15px;
+            }
+            
+            .message-text {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+            
+            .chat-input-container {
+                padding: 15px;
+            }
+            
+            .input-actions {
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                padding: 0 12px;
+                height: 40px;
+                font-size: 12px;
+            }
+            
+            #send-btn {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .options-container {
+                padding: 15px;
+            }
+            
+            .modal-content, .ticket-history-content, .notification-prefs-content {
+                width: 95%;
+                margin: 5% auto;
+            }
+            
+            .issue-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .ticket-table-container {
+                overflow-x: auto;
+                font-size: 12px;
+            }
+            
+            .ticket-table th, .ticket-table td {
+                padding: 8px 10px;
+            }
+            
+            .mobile-app-header {
+                display: flex;
+            }
+            
+            body {
+                padding-top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile App Header -->
+    <div class="mobile-app-header" id="mobile-app-header">
+        <div class="mobile-app-title">IT Helpdesk</div>
+        <button class="mobile-menu-btn" id="mobile-menu-btn">☰</button>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3>IT Helpdesk</h3>
+        </div>
+        <div class="mobile-nav-item" id="mobile-home">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            Home
+        </div>
+        <div class="mobile-nav-item" id="mobile-tickets">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            My Tickets
+        </div>
+        <div class="mobile-nav-item" id="mobile-notifications">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            Notifications
+        </div>
+        <div class="mobile-nav-item" id="mobile-settings">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+            </svg>
+            Settings
+        </div>
+        <div class="mobile-nav-item" id="mobile-logout">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+            </svg>
+            Logout
+        </div>
+    </div>
+    
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    
+    <!-- PWA Install Banner -->
+    <div class="pwa-install-banner" id="pwa-install-banner">
+        <div class="pwa-install-text">
+            <strong>Install IT Helpdesk App</strong><br>
+            <small>Add to your home screen for quick access</small>
+        </div>
+        <button class="pwa-install-btn" id="pwa-install-btn">Install</button>
+        <button class="pwa-install-dismiss" id="pwa-install-dismiss">×</button>
+    </div>
+    
+    <!-- Connection Status Indicator -->
+    <div id="connection-status">Connecting...</div>
+    
+    <!-- Service Status Indicator -->
+    <div id="service-status" class="service-status">Feedback Service: Checking...</div>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="theme-toggle" title="Toggle dark mode">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm1 18v-2c0-.55-.45-1-1-1s-1 .45-1 1v2c0 .55.45 1 1 1s1-.45 1-1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+            <path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.06 7 9.54 0 8.48-6.6 15.4-15 15.4-3.61 0-6.82-1.39-9.29-3.66C3.46 8.28 2 11.95 2 16c0 3.31 1.35 6.31 3.54 8.48C3.95 20.82 0 16.28 0 12c0-4.97 4.03-9 9-9s9 4.03 9 9c0 .34-.02.67-.05 1-.05-1.64 0-3.14-.46-4.43-1.24C16.17 18.98 14.21 20 12 20c-2.76 0-5-2.24-5-5s2.24-5 5-5c1.38 0 2.64.56 3.54 1.46.9.9 1.46 2.16 1.46 3.54 0 2.76-2.24 5-5 5z"/>
+        </svg>
+    </button>
+
+    <!-- Sync Button -->
+    <button class="sync-button" id="sync-button" title="Sync with server">↻</button>
+
+    <!-- Login Container -->
+    <div class="login-container" id="login-container">
+        <div class="login-header">
+            <svg class="login-header-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Sunflower Stem -->
+                <path d="M50 60 C50 70, 48 80, 48 90" stroke="#2E7D32" stroke-width="4" fill="none"/>
+                <!-- Sunflower Leaf -->
+                <path d="M48 75 C35 70, 30 75, 35 85" stroke="#2E7D32" stroke-width="3" fill="#4CAF50"/>
+                <!-- Sunflower Petals -->
+                <g transform="translate(50, 40)">
+                    <!-- Inner petals -->
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(0)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(30)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(60)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(90)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(120)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(150)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(180)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(210)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(240)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(270)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(300)"/>
+                    <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(330)"/>
+                    
+                    <!-- Outer petals -->
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(15)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(45)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(75)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(105)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(135)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(165)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(195)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(225)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(255)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(285)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(315)"/>
+                    <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(345)"/>
+                    
+                    <!-- Sunflower Center -->
+                    <circle cx="0" cy="0" r="12" fill="#8D6E63"/>
+                    <circle cx="0" cy="0" r="10" fill="#5D4037"/>
+                    <!-- Center texture -->
+                    <circle cx="-3" cy="-3" r="1.5" fill="#3E2723"/>
+                    <circle cx="3" cy="-3" r="1.5" fill="#3E2723"/>
+                    <circle cx="0" cy="3" r="1.5" fill="#3E2723"/>
+                    <circle cx="-4" cy="2" r="1.5" fill="#3E2723"/>
+                    <circle cx="4" cy="2" r="1.5" fill="#3E2723"/>
+                </g>
+            </svg>
+            IT Helpdesk Support Assistant
+        </div>
+        <div class="login-form">
+            <div class="form-group">
+                <label class="form-label" for="user-id">User ID</label>
+                <input type="text" id="user-id" class="form-input" placeholder="Enter your user ID" autocomplete="off">
+                <div class="error-message" id="user-id-error">User ID not found</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password">
+                <div class="error-message" id="password-error">Incorrect password</div>
+            </div>
+            <button id="login-btn" class="login-btn">Login</button>
+            <div class="login-help">
+                Use your employee ID and password to login.
+            </div>
+        </div>
+        
+        <!-- Mobile Download Section -->
+        <div class="mobile-download-section">
+            <div class="download-title">Get the Mobile App</div>
+            <div class="download-description">
+                Install our mobile app for quick access to IT support from anywhere.
+            </div>
+            <div class="download-buttons">
+                <a href="#" class="download-btn" id="download-android">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                    </svg>
+                    Android
+                </a>
+                <a href="#" class="download-btn secondary" id="download-ios">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                    </svg>
+                    iOS
+                </a>
+            </div>
+            <div class="qr-code">
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <rect width="150" height="150" fill="white"/>
+                    <rect x="10" y="10" width="20" height="20" fill="black"/>
+                    <rect x="40" y="10" width="10" height="10" fill="black"/>
+                    <rect x="60" y="10" width="10" height="10" fill="black"/>
+                    <rect x="90" y="10" width="10" height="10" fill="black"/>
+                    <rect x="120" y="10" width="20" height="20" fill="black"/>
+                    <rect x="10" y="40" width="10" height="10" fill="black"/>
+                    <rect x="40" y="40" width="10" height="10" fill="black"/>
+                    <rect x="60" y="40" width="10" height="10" fill="black"/>
+                    <rect x="90" y="40" width="10" height="10" fill="black"/>
+                    <rect x="120" y="40" width="10" height="10" fill="black"/>
+                    <rect x="10" y="60" width="10" height="10" fill="black"/>
+                    <rect x="40" y="60" width="10" height="10" fill="black"/>
+                    <rect x="60" y="60" width="30" height="10" fill="black"/>
+                    <rect x="100" y="60" width="10" height="10" fill="black"/>
+                    <rect x="120" y="60" width="10" height="10" fill="black"/>
+                    <rect x="10" y="80" width="10" height="10" fill="black"/>
+                    <rect x="40" y="80" width="10" height="10" fill="black"/>
+                    <rect x="60" y="80" width="10" height="10" fill="black"/>
+                    <rect x="80" y="80" width="10" height="10" fill="black"/>
+                    <rect x="100" y="80" width="10" height="10" fill="black"/>
+                    <rect x="120" y="80" width="10" height="10" fill="black"/>
+                    <rect x="10" y="100" width="10" height="10" fill="black"/>
+                    <rect x="40" y="100" width="10" height="10" fill="black"/>
+                    <rect x="60" y="100" width="10" height="10" fill="black"/>
+                    <rect x="80" y="100" width="10" height="10" fill="black"/>
+                    <rect x="100" y="100" width="10" height="10" fill="black"/>
+                    <rect x="120" y="100" width="10" height="10" fill="black"/>
+                    <rect x="10" y="120" width="20" height="20" fill="black"/>
+                    <rect x="40" y="120" width="10" height="10" fill="black"/>
+                    <rect x="60" y="120" width="10" height="10" fill="black"/>
+                    <rect x="80" y="120" width="10" height="10" fill="black"/>
+                    <rect x="100" y="120" width="10" height="10" fill="black"/>
+                    <rect x="120" y="120" width="20" height="20" fill="black"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chat Container -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            <div class="chat-header-title">
+                <svg class="chat-header-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Sunflower Stem -->
+                    <path d="M50 60 C50 70, 48 80, 48 90" stroke="#2E7D32" stroke-width="4" fill="none"/>
+                    <!-- Sunflower Leaf -->
+                    <path d="M48 75 C35 70, 30 75, 35 85" stroke="#2E7D32" stroke-width="3" fill="#4CAF50"/>
+                    <!-- Sunflower Petals -->
+                    <g transform="translate(50, 40)">
+                        <!-- Inner petals -->
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(0)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(30)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(60)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(90)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(120)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(150)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(180)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(210)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(240)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(270)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(300)"/>
+                        <ellipse cx="0" cy="-18" rx="6" ry="12" fill="#FF9800" transform="rotate(330)"/>
+                        
+                        <!-- Outer petals -->
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(15)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(45)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(75)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(105)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(135)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(165)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(195)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(225)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(255)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(285)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(315)"/>
+                        <ellipse cx="0" cy="-25" rx="8" ry="15" fill="#FFC107" transform="rotate(345)"/>
+                        
+                        <!-- Sunflower Center -->
+                        <circle cx="0" cy="0" r="12" fill="#8D6E63"/>
+                        <circle cx="0" cy="0" r="10" fill="#5D4037"/>
+                        <!-- Center texture -->
+                        <circle cx="-3" cy="-3" r="1.5" fill="#3E2723"/>
+                        <circle cx="3" cy="-3" r="1.5" fill="#3E2723"/>
+                        <circle cx="0" cy="3" r="1.5" fill="#3E2723"/>
+                        <circle cx="-4" cy="2" r="1.5" fill="#3E2723"/>
+                        <circle cx="4" cy="2" r="1.5" fill="#3E2723"/>
+                    </g>
+                </svg>
+                <div>
+                    IT Helpdesk Support Assistant
+                    <div class="user-welcome" id="user-welcome">Welcome, User</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="ticket-history-btn" class="header-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-2 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    History
+                </button>
+                <button id="notification-prefs-btn" class="header-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                    </svg>
+                    Notifications
+                </button>
+                <button id="logout-btn" class="header-btn">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                <div class="message-text">
+                    Hello! I'm your IT Support Assistant. I'll create a support ticket for your issue.<br>
+                    <small>Please fill in all the fields below and describe your IT issue.</small>
+                </div>
+            </div>
+        </div>
+        <div class="typing-indicator" id="typing-indicator">IT Assistant is typing...</div>
+        <div class="chat-input-container">
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Describe your IT issue..." autocomplete="off">
+                <div class="input-actions">
+                    <button id="file-attachment-btn" class="action-btn" title="Attach files">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M16.5 6v11.5c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v10.5c0 .55-.45 1-1 1s-1-.45-1-1V6H10v9.5c0 1.38 1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5V5c0-2.21-1.79-4-4-4S7 2.79 7 5v12.5c0 3.04 2.46 5.5 5.5 5.5s5.5-2.46 5.5-5.5V6h-1.5z"/>
+                        </svg>
+                        Attach
+                    </button>
+                    <button id="select-issue-btn" class="action-btn" title="Select common issue">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                        Issues
+                    </button>
+                    <button id="send-btn" title="Send message">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="file-attachment-container" id="file-attachment-container" style="display: none;"></div>
+        </div>
+        <div class="options-container">
+            <div class="options-grid">
+                <div class="sender-name-group options-full" id="sender-name-group">
+                    <div class="options-label">Select your name:</div>
+                    <select class="options-dropdown" id="sender-name">
+                        <option value="">Select your name...</option>
+                        <option value="Nikhil bhai">Nikhil bhai</option>
+                        <option value="Pappu bhai">Pappu bhai</option>
+                        <option value="Hetal bhai">Hetal bhai</option>
+                        <option value="Vishal bhai">Vishal bhai</option>
+                        <option value="Ashish bhai">Ashish bhai</option>
+                        <option value="Dhruval bhai">Dhruval bhai</option>
+                        <option value="Nitin Variya">Nitin Variya</option>
+                        <option value="Ashish Patel">Ashish Patel</option>
+                        <option value="Nilay bhai">Nilay bhai</option>
+                        <option value="Dhruvil bhai">Dhruvil bhai</option>
+                        <option value="Piyush bhai">Piyush bhai</option>
+                        <option value="Pankaj bhai">Pankaj bhai</option>
+                        <option value="Arpit bhai">Arpit bhai</option>
+                        <option value="Dipak bhai">Dipak bhai</option>
+                        <option value="Siril bhai">Siril bhai</option>
+                        <option value="Jayesh bhai">Jayesh bhai</option>
+                        <option value="Riken bhai">Riken bhai</option>
+                        <option value="Priyal bhai">Priyal bhai</option>
+                        <option value="Aakash bhai">Aakash bhai</option>
+                        <option value="Nitin Tailor">Nitin Tailor</option>
+                        <option value="Nimesh bhai">Nimesh bhai</option>
+                        <option value="JB Shah">JB Shah</option>
+                        <option value="Piyush Rawal">Piyush Rawal</option>
+                        <option value="RK bhai">RK bhai</option>
+                        <option value="Jatin bhai">Jatin bhai</option>
+                        <option value="Bookends bhai">Bookends bhai</option>
+                        <option value="Offsite bhai">Offsite bhai</option>
+                        <option value="Kamlesh bhai">Kamlesh bhai</option>
+                    </select>
+                </div>
+                
+                <div class="floor-group">
+                    <div class="options-label">Select floor:</div>
+                    <select class="options-dropdown" id="floor-select">
+                        <option value="">Select floor...</option>
+                        <option value="GF-B3">GF-B3</option>
+                        <option value="FF-B2">FF-B2</option>
+                        <option value="FF-B3">FF-B3</option>
+                        <option value="FF-B4">FF-B4</option>
+                        <option value="FF-B5">FF-B5</option>
+                        <option value="GF-B2">GF-B2</option>
+                        <option value="SF-B2">SF-B2</option>
+                        <option value="SF-B4">SF-B4</option>
+                        <option value="SF-B6">SF-B6</option>
+                        <option value="FF-B6">FF-B6</option>
+                    </select>
+                </div>
+                
+                <div class="department-group">
+                    <div class="options-label">Select department:</div>
+                    <select class="options-dropdown" id="department-select">
+                        <option value="">Select department...</option>
+                        <option value="Galahad">Galahad</option>
+                        <option value="CLV">CLV</option>
+                        <option value="Recut">Recut</option>
+                        <option value="Laser">Laser</option>
+                        <option value="DNA">DNA</option>
+                        <option value="Fancy Manual">Fancy Manual</option>
+                        <option value="Round Manual">Round Manual</option>
+                        <option value="Bookends">Bookends</option>
+                        <option value="Offside">Offside</option>
+                        <option value="Fancy Galahad">fancy galahad</option>
+                        <option value="Semi Polish">Semi Polish</option>
+                        <option value="X-ray">x-Ray</option>
+                        <option value="SPC">SPC</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Account">Account</option>
+                        <option value="Smart Recut">Smart Recut</option>
+                        <option value="Rough analysi">Rough Analysi</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Lab">lab</option>
+                        <option value="Stock control">stock control</option>
+                        <option value="MFG service">MFG service</option>
+                    </select>
+                </div>
+                
+                <div class="machine-name-group options-full">
+                    <div class="options-label">Computer Name / Machine No:</div>
+                    <input type="text" id="machine-name" class="form-input" placeholder="Enter computer name or machine number" autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Issue Selection Modal -->
+    <div id="issue-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Select an Issue</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="issue-grid" id="issue-grid">
+                    <div class="issue-item" data-value="Sarin advisor">Sarin advisor</div>
+                    <div class="issue-item" data-value="Galahad compass">Galahad compass</div>
+                    <div class="issue-item" data-value="Helium polish">Helium polish</div>
+                    <div class="issue-item" data-value="DNA machine">DNA machine</div>
+                    <div class="issue-item" data-value="Printer problems">Printer problems</div>
+                    <div class="issue-item" data-value="Software installation">Software installation</div>
+                    <div class="issue-item" data-value="Network connectivity">Network connectivity</div>
+                    <div class="issue-item" data-value="Printer Not Working">Printer Not Working</div>
+                    <div class="issue-item" data-value="Computer Running Slow">Computer Running Slow</div>
+                    <div class="issue-item" data-value="Wi-Fi Not Connecting">Wi-Fi Not Connecting</div>
+                    <div class="issue-item" data-value="mouse not working">mouse not working</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ticket History Modal -->
+    <div id="ticket-history-modal" class="ticket-history-modal">
+        <div class="ticket-history-content">
+            <div class="ticket-history-header">
+                <h3 class="ticket-history-title">Ticket History</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="ticket-history-body">
+                <div class="ticket-history-filters">
+                    <div class="ticket-history-search">
+                        <input type="text" id="ticket-search" placeholder="Search by ID or issue description...">
+                    </div>
+                    <div class="ticket-history-filter">
+                        <select id="ticket-status-filter">
+                            <option value="all">All Statuses</option>
+                            <option value="open">Open</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ticket-table-container">
+                    <table class="ticket-table">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Issue</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Assigned To</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticket-table-body">
+                            <!-- Ticket rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Preferences Modal -->
+    <div id="notification-prefs-modal" class="notification-prefs-modal">
+        <div class="notification-prefs-content">
+            <div class="notification-prefs-header">
+                <h3 class="notification-prefs-title">Notification Preferences</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="notification-prefs-body">
+                <div class="prefs-section">
+                    <h4 class="prefs-section-title">Notification Methods</h4>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Browser Notifications</div>
+                            <div class="prefs-description">Show notifications in your browser</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="browser-notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Email Notifications</div>
+                            <div class="prefs-description">Send notifications to your email</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="email-notifications-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Sound Alerts</div>
+                            <div class="prefs-description">Play sound for new notifications</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="sound-notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="prefs-section">
+                    <h4 class="prefs-section-title">Notification Types</h4>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Ticket Assignment</div>
+                            <div class="prefs-description">When your ticket is assigned to an engineer</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="assignment-notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Engineer Acknowledgment</div>
+                            <div class="prefs-description">When an engineer acknowledges your ticket</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="acknowledgment-notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Ticket Resolution</div>
+                            <div class="prefs-description">When your ticket is resolved</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="resolution-notifications-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">SLA Reminders</div>
+                            <div class="prefs-description">Reminders before SLA deadline</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="sla-reminders-toggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="prefs-section">
+                    <h4 class="prefs-section-title">Quiet Hours</h4>
+                    <div class="prefs-option">
+                        <div>
+                            <div class="prefs-label">Enable Quiet Hours</div>
+                            <div class="prefs-description">Disable notifications during specified hours</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="quiet-hours-toggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="quiet-hours">
+                        <div class="time-input">
+                            <label for="quiet-hours-start">Start Time</label>
+                            <input type="time" id="quiet-hours-start" value="22:00">
+                        </div>
+                        <div class="time-input">
+                            <label for="quiet-hours-end">End Time</label>
+                            <input type="time" id="quiet-hours-end" value="08:00">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button class="modal-btn modal-btn-secondary" id="prefs-cancel-btn">Cancel</button>
+                    <button class="modal-btn modal-btn-primary" id="prefs-save-btn">Save Preferences</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Service Feedback</h3>
+                <button class="close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="feedback-form">
+                    <div class="feedback-header">
+                        <h3 class="feedback-title">Your input matters!</h3>
+                        <p class="feedback-description">Share your thoughts, suggestions, or experience to help us improve.</p>
+                    </div>
+                    
+                    <div class="feedback-rating">
+                        <div class="rating-question">How would you rate us?</div>
+                        <div class="rating-options">
+                            <div class="rating-option" data-rating="5">
+                                <div class="rating-emoji">😍</div>
+                                <div class="rating-label">Great</div>
+                            </div>
+                            <div class="rating-option" data-rating="4">
+                                <div class="rating-emoji">🙂</div>
+                                <div class="rating-label">Good</div>
+                            </div>
+                            <div class="rating-option" data-rating="3">
+                                <div class="rating-emoji">😐</div>
+                                <div class="rating-label">Medium</div>
+                            </div>
+                            <div class="rating-option" data-rating="2">
+                                <div class="rating-emoji">🙁</div>
+                                <div class="rating-label">Bad</div>
+                            </div>
+                            <div class="rating-option" data-rating="1">
+                                <div class="rating-emoji">😢</div>
+                                <div class="rating-label">Worse</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feedback-comment">
+                        <label class="comment-label" for="feedback-comment">Something you want to tell us? (optional)</label>
+                        <textarea id="feedback-comment" class="comment-textarea" maxlength="4000" placeholder="Share your feedback..."></textarea>
+                        <div class="char-counter">
+                            <span id="char-count">0</span> / 4000
+                        </div>
+                    </div>
+                    
+                    <button id="feedback-submit" class="feedback-submit" disabled>Submit</button>
+                    
+                    <div id="feedback-success" class="feedback-success" style="display: none;">
+                        <div class="feedback-success-icon">✓</div>
+                        <div class="feedback-success-message">Thank you for your feedback!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    
+    <!-- Sound notification element -->
+    <audio id="notification-sound" class="sound-notification">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmFgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+    </audio>
+    
+    <!-- Hidden file input -->
+    <input type="file" id="file-input" multiple style="display: none;">
+    
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://172.16.36.40:3000/api';
+        const WS_URL = 'ws://172.16.36.40:3000/ws';
+        
+        // User credentials database
+        const users = {
+            "nikhil": { password: "nikhil123", fullName: "Nikhil bhai" },
+            "pappu": { password: "pappu123", fullName: "Pappu bhai" },
+            "hetal": { password: "hetal123", fullName: "Hetal bhai" },
+            "vishal": { password: "vishal123", fullName: "Vishal bhai" },
+            "ashish": { password: "ashish123", fullName: "Ashish bhai" },
+            "dhruval": { password: "dhruval123", fullName: "Dhruval bhai" },
+            "nitin": { password: "nitin123", fullName: "Nitin Variya" },
+            "ashishp": { password: "ashishp123", fullName: "Ashish Patel" },
+            "nilay": { password: "nilay123", fullName: "Nilay Bhai" },
+            "dhruvil": { password: "dhruvil123", fullName: "Dhruvil bhai" },
+            "piyush": { password: "piyush123", fullName: "Piyush bhai" },
+            "pankaj": { password: "pankaj123", fullName: "Pankaj bhai" },
+            "arpit": { password: "arpit123", fullName: "Arpit bhai" },
+            "dipak": { password: "dipak123", fullName: "Dipak bhai" },
+            "siril": { password: "siril123", fullName: "Siril bhai" },
+            "jayesh": { password: "jayesh123", fullName: "Jayesh bhai" },
+            "riken": { password: "riken123", fullName: "Riken bhai" },
+            "priyal": { password: "priyal123", fullName: "Priyal bhai" },
+            "aakash": { password: "aakash123", fullName: "Aakash bhai" },
+            "nitintailor": { password: "nitintailor123", fullName: "Nitin Tailor" },
+            "nimesh": { password: "nimesh123", fullName: "Nimesh bhai" },
+            "jbshah": { password: "jbshah123", fullName: "JB Shah" },
+            "piyushrawal": { password: "piyushrawal123", fullName: "Piyush Rawal" },
+            "rkbhai": { password: "rkbhai123", fullName: "RK bhai" },
+            "jatin": { password: "jatin123", fullName: "Jatin bhai" },
+            "bookends": { password: "bookends123", fullName: "Bookends bhai" },
+            "offsite": { password: "offsite123", fullName: "Offsite bhai" },
+            "kamlesh": { password: "kamlesh123", fullName: "Kamlesh bhai" }
+        };
+        
+        // DOM Elements
+        const loginContainer = document.getElementById('login-container');
+        const chatContainer = document.getElementById('chat-container');
+        const userIdInput = document.getElementById('user-id');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const userIdError = document.getElementById('user-id-error');
+        const passwordError = document.getElementById('password-error');
+        const userWelcome = document.getElementById('user-welcome');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const selectIssueBtn = document.getElementById('select-issue-btn');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const notification = document.getElementById('notification');
+        const senderName = document.getElementById('sender-name');
+        const senderNameGroup = document.getElementById('sender-name-group');
+        const floorSelect = document.getElementById('floor-select');
+        const departmentSelect = document.getElementById('department-select');
+        const machineNameInput = document.getElementById('machine-name');
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.querySelector('.sun-icon');
+        const moonIcon = document.querySelector('.moon-icon');
+        const syncButton = document.getElementById('sync-button');
+        const connectionStatus = document.getElementById('connection-status');
+        const serviceStatus = document.getElementById('service-status');
+        
+        // Mobile-specific DOM elements
+        const mobileAppHeader = document.getElementById('mobile-app-header');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+        const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+        const mobileHome = document.getElementById('mobile-home');
+        const mobileTickets = document.getElementById('mobile-tickets');
+        const mobileNotifications = document.getElementById('mobile-notifications');
+        const mobileSettings = document.getElementById('mobile-settings');
+        const mobileLogout = document.getElementById('mobile-logout');
+        
+        // PWA Install Banner elements
+        const pwaInstallBanner = document.getElementById('pwa-install-banner');
+        const pwaInstallBtn = document.getElementById('pwa-install-btn');
+        const pwaInstallDismiss = document.getElementById('pwa-install-dismiss');
+        
+        // Download buttons
+        const downloadAndroid = document.getElementById('download-android');
+        const downloadiOS = document.getElementById('download-ios');
+        
+        // New DOM elements for Phase 1 and 2 features
+        const ticketHistoryBtn = document.getElementById('ticket-history-btn');
+        const notificationPrefsBtn = document.getElementById('notification-prefs-btn');
+        const fileAttachmentBtn = document.getElementById('file-attachment-btn');
+        const fileInput = document.getElementById('file-input');
+        const fileAttachmentContainer = document.getElementById('file-attachment-container');
+        const notificationSound = document.getElementById('notification-sound');
+        
+        // Modal elements
+        const issueModal = document.getElementById('issue-modal');
+        const modalClose = document.querySelectorAll('.close');
+        const modalCancel = document.getElementById('modal-cancel');
+        const modalConfirm = document.getElementById('modal-confirm');
+        const issueGrid = document.getElementById('issue-grid');
+        const issueItems = document.querySelectorAll('.issue-item');
+        
+        // Ticket History Modal elements
+        const ticketHistoryModal = document.getElementById('ticket-history-modal');
+        const ticketSearch = document.getElementById('ticket-search');
+        const ticketStatusFilter = document.getElementById('ticket-status-filter');
+        const ticketTableBody = document.getElementById('ticket-table-body');
+        
+        // Notification Preferences Modal elements
+        const notificationPrefsModal = document.getElementById('notification-prefs-modal');
+        const prefsCancelBtn = document.getElementById('prefs-cancel-btn');
+        const prefsSaveBtn = document.getElementById('prefs-save-btn');
+        
+        // Notification preference toggles
+        const browserNotificationsToggle = document.getElementById('browser-notifications-toggle');
+        const emailNotificationsToggle = document.getElementById('email-notifications-toggle');
+        const soundNotificationsToggle = document.getElementById('sound-notifications-toggle');
+        const assignmentNotificationsToggle = document.getElementById('assignment-notifications-toggle');
+        const acknowledgmentNotificationsToggle = document.getElementById('acknowledgment-notifications-toggle');
+        const resolutionNotificationsToggle = document.getElementById('resolution-notifications-toggle');
+        const slaRemindersToggle = document.getElementById('sla-reminders-toggle');
+        const quietHoursToggle = document.getElementById('quiet-hours-toggle');
+        const quietHoursStart = document.getElementById('quiet-hours-start');
+        const quietHoursEnd = document.getElementById('quiet-hours-end');
+        
+        // Feedback Modal elements
+        const feedbackModal = document.getElementById('feedback-modal');
+        const feedbackSubmit = document.getElementById('feedback-submit');
+        const feedbackComment = document.getElementById('feedback-comment');
+        const charCount = document.getElementById('char-count');
+        const feedbackSuccess = document.getElementById('feedback-success');
+        const ratingOptions = document.querySelectorAll('.rating-option');
+        
+        // Current user
+        let currentUser = null;
+        let currentUserName = '';
+        let socket = null;
+        let pollingInterval = null;
+        let selectedIssue = null;
+        let attachedFiles = [];
+        let slaTimers = {};
+        let currentTicketId = null;
+        let selectedRating = null;
+        let feedbackServiceAvailable = false;
+        let deferredPrompt = null;
+        
+        // Priority keywords
+        const priorityKeywords = {
+            high: ["emergency", "urgent", "critical", "down", "not working", "broken", "fire"],
+            medium: ["slow", "issue", "problem", "error", "not connecting"],
+            low: ["question", "how to", "help", "advice"]
+        };
+        
+        // SLA configuration
+        const SLA_DURATION_MINUTES = 30;
+        const SLA_REMINDER_MINUTES = [15, 10, 5];
+        
+        // Notification preferences (default values)
+        let notificationPrefs = {
+            browserNotifications: true,
+            emailNotifications: false,
+            soundNotifications: true,
+            assignmentNotifications: true,
+            acknowledgmentNotifications: true,
+            resolutionNotifications: true,
+            slaReminders: true,
+            quietHours: false,
+            quietHoursStart: "22:00",
+            quietHoursEnd: "08:00"
+        };
+        
+        // Check if running in mobile app mode
+        function isMobileApp() {
+            return window.matchMedia('(display-mode: standalone)').matches || 
+                   window.navigator.standalone ||
+                   document.referrer.includes('android-app://') ||
+                   document.referrer.includes('ios-app://');
+        }
+        
+        // Initialize mobile app UI
+        function initializeMobileApp() {
+            if (isMobileApp()) {
+                mobileAppHeader.style.display = 'flex';
+                document.body.style.paddingTop = '60px';
+            } else {
+                // Show PWA install banner if not installed
+                setTimeout(() => {
+                    if (deferredPrompt && !localStorage.getItem('pwaInstallDismissed')) {
+                        pwaInstallBanner.classList.add('show');
+                    }
+                }, 3000);
+            }
+        }
+        
+        // Mobile navigation
+        function toggleMobileNav() {
+            mobileNav.classList.toggle('open');
+            mobileNavOverlay.classList.toggle('show');
+        }
+        
+        function closeMobileNav() {
+            mobileNav.classList.remove('open');
+            mobileNavOverlay.classList.remove('show');
+        }
+        
+        // PWA Install functionality
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+        
+        pwaInstallBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                deferredPrompt = null;
+                pwaInstallBanner.classList.remove('show');
+            }
+        });
+        
+        pwaInstallDismiss.addEventListener('click', () => {
+            pwaInstallBanner.classList.remove('show');
+            localStorage.setItem('pwaInstallDismissed', 'true');
+        });
+        
+        // Download functionality
+        downloadAndroid.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Generate APK download link
+            const appUrl = 'data:application/vnd.android.package-archive;base64,' + 
+                          btoa('Mock APK content - In a real implementation, this would be a proper APK file');
+            const a = document.createElement('a');
+            a.href = appUrl;
+            a.download = 'it-helpdesk.apk';
+            a.click();
+            
+            showNotification('Android app download started', 'success');
+        });
+        
+        downloadiOS.addEventListener('click', (e) => {
+            e.preventDefault();
+            // For iOS, we need to guide users to install the PWA
+            showNotification('To install on iOS, tap the Share button and select "Add to Home Screen"', 'info');
+        });
+        
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Toggle icons
+            if (newTheme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+        
+        // Initialize theme from localStorage or system preference
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // Set initial icon visibility
+            if (theme === 'dark') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+        
+        // Initialize notification preferences from localStorage
+        function initializeNotificationPreferences() {
+            const savedPrefs = localStorage.getItem('notificationPrefs');
+            if (savedPrefs) {
+                notificationPrefs = JSON.parse(savedPrefs);
+                
+                // Update UI to match saved preferences
+                browserNotificationsToggle.checked = notificationPrefs.browserNotifications;
+                emailNotificationsToggle.checked = notificationPrefs.emailNotifications;
+                soundNotificationsToggle.checked = notificationPrefs.soundNotifications;
+                assignmentNotificationsToggle.checked = notificationPrefs.assignmentNotifications;
+                acknowledgmentNotificationsToggle.checked = notificationPrefs.acknowledgmentNotifications;
+                resolutionNotificationsToggle.checked = notificationPrefs.resolutionNotifications;
+                slaRemindersToggle.checked = notificationPrefs.slaReminders;
+                quietHoursToggle.checked = notificationPrefs.quietHours;
+                quietHoursStart.value = notificationPrefs.quietHoursStart;
+                quietHoursEnd.value = notificationPrefs.quietHoursEnd;
+            }
+        }
+        
+        // Save notification preferences to localStorage
+        function saveNotificationPreferences() {
+            notificationPrefs = {
+                browserNotifications: browserNotificationsToggle.checked,
+                emailNotifications: emailNotificationsToggle.checked,
+                soundNotifications: soundNotificationsToggle.checked,
+                assignmentNotifications: assignmentNotificationsToggle.checked,
+                acknowledgmentNotifications: acknowledgmentNotificationsToggle.checked,
+                resolutionNotifications: resolutionNotificationsToggle.checked,
+                slaReminders: slaRemindersToggle.checked,
+                quietHours: quietHoursToggle.checked,
+                quietHoursStart: quietHoursStart.value,
+                quietHoursEnd: quietHoursEnd.value
+            };
+            
+            localStorage.setItem('notificationPrefs', JSON.stringify(notificationPrefs));
+        }
+        
+        // Check if current time is within quiet hours
+        function isQuietHours() {
+            if (!notificationPrefs.quietHours) {
+                return false;
+            }
+            
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            
+            const [startHour, startMinute] = notificationPrefs.quietHoursStart.split(':').map(Number);
+            const [endHour, endMinute] = notificationPrefs.quietHoursEnd.split(':').map(Number);
+            
+            const startTime = startHour * 60 + startMinute;
+            const endTime = endHour * 60 + endMinute;
+            
+            // Handle overnight quiet hours (e.g., 22:00 to 08:00)
+            if (startTime > endTime) {
+                return currentTime >= startTime || currentTime <= endTime;
+            } else {
+                return currentTime >= startTime && currentTime <= endTime;
+            }
+        }
+        
+        // Play notification sound
+        function playNotificationSound() {
+            if (notificationPrefs.soundNotifications && !isQuietHours()) {
+                notificationSound.play().catch(e => console.log('Error playing notification sound:', e));
+            }
+        }
+        
+        // Show desktop notification with sound
+        function showDesktopNotification(title, message) {
+            if (!notificationPrefs.browserNotifications || isQuietHours()) {
+                return;
+            }
+            
+            if (!("Notification" in window)) {
+                console.log("This browser does not support desktop notification");
+                return;
+            }
+            
+            // Let's check if notification permissions have been granted
+            else if (Notification.permission === "granted") {
+                const notification = new Notification(title, { body: message });
+                playNotificationSound();
+            }
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(function (permission) {
+                    if (permission === "granted") {
+                        const notification = new Notification(title, { body: message });
+                        playNotificationSound();
+                    }
+                });
+            }
+        }
+        
+        // Improved feedback service availability check
+        async function checkFeedbackServiceAvailability() {
+            try {
+                // Set a timeout for the request
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+                
+                const response = await fetch(`${API_BASE_URL}/feedback`, { 
+                    method: 'HEAD',
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                feedbackServiceAvailable = response.ok;
+                
+                // Update service status indicator
+                if (feedbackServiceAvailable) {
+                    serviceStatus.textContent = 'Feedback Service: Online';
+                    serviceStatus.classList.add('online');
+                    serviceStatus.classList.remove('offline');
+                } else {
+                    serviceStatus.textContent = 'Feedback Service: Limited (feedback saved locally)';
+                    serviceStatus.classList.add('offline');
+                    serviceStatus.classList.remove('online');
+                }
+                
+                serviceStatus.classList.add('show');
+                return feedbackServiceAvailable;
+            } catch (error) {
+                console.error('Feedback service check failed:', error);
+                feedbackServiceAvailable = false;
+                
+                // Update service status indicator with less alarming message
+                serviceStatus.textContent = 'Feedback Service: Limited (feedback saved locally)';
+                serviceStatus.classList.add('offline');
+                serviceStatus.classList.remove('online');
+                serviceStatus.classList.add('show');
+                
+                return false;
+            }
+        }
+        
+        // Initialize service status
+        function initializeServiceStatus() {
+            serviceStatus.textContent = 'Feedback Service: Checking...';
+            serviceStatus.classList.remove('online', 'offline');
+            serviceStatus.classList.add('show');
+        }
+        
+        // Improved submit feedback with retry and fallback
+        async function submitFeedbackWithRetry(feedback, maxRetries = 3) {
+            let retryCount = 0;
+            
+            // Check if feedback service is available first
+            const serviceAvailable = await checkFeedbackServiceAvailability();
+            
+            // If service is not available, save locally and don't throw error
+            if (!serviceAvailable) {
+                saveFeedbackToLocalStorage(feedback);
+                return { success: true, message: 'Feedback saved locally for later sync' };
+            }
+            
+            while (retryCount < maxRetries) {
+                try {
+                    console.log(`Submitting feedback (attempt ${retryCount + 1}/${maxRetries}):`, feedback);
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    
+                    const response = await fetch(`${API_BASE_URL}/feedback`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(feedback),
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    console.log('Response status:', response.status);
+                    
+                    if (!response.ok) {
+                        // If we get a 404 or 500, save locally and don't retry
+                        if (response.status === 404 || response.status >= 500) {
+                            saveFeedbackToLocalStorage(feedback);
+                            return { success: true, message: 'Feedback saved locally due to server error' };
+                        }
+                        
+                        // Try to get more error details
+                        let errorDetails = '';
+                        try {
+                            const errorData = await response.json();
+                            errorDetails = errorData.message || errorData.error || JSON.stringify(errorData);
+                        } catch (e) {
+                            errorDetails = response.statusText;
+                        }
+                        
+                        throw new Error(`Server error (${response.status}): ${errorDetails}`);
+                    }
+                    
+                    // Success
+                    const responseData = await response.json();
+                    console.log('Feedback submitted successfully:', responseData);
+                    return { success: true, data: responseData };
+                    
+                } catch (error) {
+                    console.error(`Error submitting feedback (attempt ${retryCount + 1}/${maxRetries}):`, error);
+                    
+                    // If this is the last attempt, save locally and return success
+                    if (retryCount === maxRetries - 1) {
+                        saveFeedbackToLocalStorage(feedback);
+                        return { success: true, message: 'Feedback saved locally due to connection issues' };
+                    }
+                    
+                    // Wait before retrying (exponential backoff)
+                    const waitTime = Math.pow(2, retryCount) * 1000;
+                    console.log(`Retrying in ${waitTime}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    
+                    retryCount++;
+                }
+            }
+            
+            // This shouldn't be reached, but just in case
+            saveFeedbackToLocalStorage(feedback);
+            return { success: true, message: 'Feedback saved locally' };
+        }
+        
+        // Function to save feedback to localStorage for later sync
+        function saveFeedbackToLocalStorage(feedback) {
+            const pendingFeedback = JSON.parse(localStorage.getItem('pendingFeedback') || '[]');
+            pendingFeedback.push({
+                ...feedback,
+                timestamp: new Date().toISOString(),
+                retryCount: 0
+            });
+            localStorage.setItem('pendingFeedback', JSON.stringify(pendingFeedback));
+        }
+        
+        // Function to sync pending feedback from localStorage
+        async function syncPendingFeedback() {
+            const pendingFeedback = JSON.parse(localStorage.getItem('pendingFeedback') || '[]');
+            
+            if (pendingFeedback.length === 0) return;
+            
+            // Check if feedback service is available
+            const serviceAvailable = await checkFeedbackServiceAvailability();
+            if (!serviceAvailable) return;
+            
+            // Process each pending feedback
+            const syncedFeedback = [];
+            const failedFeedback = [];
+            
+            for (const feedback of pendingFeedback) {
+                try {
+                    await submitFeedbackWithRetry(feedback, 1); // Only try once during sync
+                    syncedFeedback.push(feedback);
+                } catch (error) {
+                    console.error('Failed to sync feedback:', feedback, error);
+                    failedFeedback.push(feedback);
+                }
+            }
+            
+            // Update localStorage
+            if (syncedFeedback.length > 0) {
+                showNotification(`Successfully synced ${syncedFeedback.length} feedback submission(s)`, 'success');
+            }
+            
+            if (failedFeedback.length > 0) {
+                localStorage.setItem('pendingFeedback', JSON.stringify(failedFeedback));
+            } else {
+                localStorage.removeItem('pendingFeedback');
+            }
+        }
+        
+        // WebSocket connection
+        function connectWebSocket() {
+            if (socket) {
+                socket.close();
+            }
+            
+            try {
+                socket = new WebSocket(WS_URL);
+                
+                socket.onopen = () => {
+                    console.log('WebSocket connected');
+                    updateConnectionStatus('Connected', true);
+                    stopPolling();
+                };
+                
+                socket.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    handleWebSocketMessage(data);
+                };
+                
+                socket.onclose = () => {
+                    console.log('WebSocket disconnected');
+                    updateConnectionStatus('Connected (Polling)', true);
+                    startPolling();
+                    // Attempt to reconnect after 5 seconds
+                    setTimeout(connectWebSocket, 5000);
+                };
+                
+                socket.onerror = (error) => {
+                    console.error('WebSocket error:', error);
+                    updateConnectionStatus('Error', false);
+                };
+            } catch (error) {
+                console.error('Failed to connect WebSocket:', error);
+                updateConnectionStatus('Offline', false);
+                startPolling();
+            }
+        }
+        
+        function handleWebSocketMessage(data) {
+            switch (data.type) {
+                case 'ticket_updated':
+                    if (data.ticket.sender === currentUserName) {
+                        checkForTicketUpdates();
+                    }
+                    break;
+                case 'ticket_assigned':
+                    if (data.ticket.sender === currentUserName && notificationPrefs.assignmentNotifications) {
+                        showAssignmentNotification(data.ticket);
+                        markTicketAsNotified(data.ticket.id, 'assignmentNotified');
+                    }
+                    break;
+                case 'ticket_acknowledged':
+                    if (data.ticket.sender === currentUserName && notificationPrefs.acknowledgmentNotifications) {
+                        showAcknowledgmentNotification(data.ticket);
+                        markTicketAsNotified(data.ticket.id, 'userAcknowledged');
+                    }
+                    break;
+                case 'ticket_resolved':
+                    if (data.ticket.sender === currentUserName && notificationPrefs.resolutionNotifications) {
+                        showResolutionNotification(data.ticket);
+                        markTicketAsNotified(data.ticket.id, 'resolutionNotified');
+                    }
+                    break;
+            }
+        }
+        
+        function updateConnectionStatus(status, isConnected) {
+            connectionStatus.textContent = status;
+            connectionStatus.style.background = isConnected ? '#2ecc71' : '#e74c3c';
+        }
+        
+        // Polling as fallback
+        function startPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+            
+            // Poll every 30 seconds
+            pollingInterval = setInterval(() => {
+                checkForTicketUpdates();
+            }, 30000);
+        }
+        
+        function stopPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+        }
+        
+        // Login Functions
+        function validateLogin() {
+            const userId = userIdInput.value.trim().toLowerCase();
+            const password = passwordInput.value;
+            
+            // Reset errors
+            userIdError.style.display = 'none';
+            passwordError.style.display = 'none';
+            
+            // Check if user exists
+            if (!users[userId]) {
+                userIdError.style.display = 'block';
+                return false;
+            }
+            
+            // Check password
+            if (users[userId].password !== password) {
+                passwordError.style.display = 'block';
+                return false;
+            }
+            
+            return true;
+        }
+        
+        function login() {
+            if (validateLogin()) {
+                const userId = userIdInput.value.trim().toLowerCase();
+                currentUser = {
+                    id: userId,
+                    fullName: users[userId].fullName
+                };
+                
+                // Update UI
+                userWelcome.textContent = `Welcome, ${currentUser.fullName}!`;
+                senderName.value = currentUser.fullName;
+                currentUserName = currentUser.fullName;
+                
+                // Hide the sender name dropdown after login
+                senderNameGroup.classList.add('hidden');
+                
+                // Show chat container
+                loginContainer.style.display = 'none';
+                chatContainer.style.display = 'flex';
+                
+                // Show welcome message
+                setTimeout(() => {
+                    addMessage(`Welcome back, ${currentUser.fullName}! How can I help you today?`, false);
+                }, 500);
+                
+                // Check for any existing ticket assignments
+                setTimeout(() => {
+                    checkForTicketAssignments();
+                }, 1000);
+                
+                // Check for any existing engineer acknowledgments
+                setTimeout(() => {
+                    checkForEngineerAcknowledgments();
+                }, 1500);
+                
+                // Check for any resolved tickets
+                setTimeout(() => {
+                    checkForResolvedTickets();
+                }, 2000);
+                
+                // Initialize SLA timers for open tickets
+                setTimeout(() => {
+                    initializeSLATimers();
+                }, 2500);
+                
+                // Check feedback service availability
+                setTimeout(() => {
+                    checkFeedbackServiceAvailability();
+                }, 3000);
+                
+                // Sync pending feedback
+                setTimeout(() => {
+                    syncPendingFeedback();
+                }, 3500);
+            }
+        }
+        
+        function logout() {
+            currentUser = null;
+            currentUserName = '';
+            userIdInput.value = '';
+            passwordInput.value = '';
+            userIdError.style.display = 'none';
+            passwordError.style.display = 'none';
+            
+            // Show the sender name dropdown again
+            senderNameGroup.classList.remove('hidden');
+            senderName.value = '';
+            
+            // Reset other dropdowns
+            floorSelect.value = '';
+            departmentSelect.value = '';
+            machineNameInput.value = '';
+            
+            // Clear attached files
+            attachedFiles = [];
+            fileAttachmentContainer.style.display = 'none';
+            fileAttachmentContainer.innerHTML = '';
+            
+            // Clear SLA timers
+            Object.values(slaTimers).forEach(timer => {
+                if (timer.interval) clearInterval(timer.interval);
+                if (timer.timeout) clearTimeout(timer.timeout);
+            });
+            slaTimers = {};
+            
+            loginContainer.style.display = 'flex';
+            chatContainer.style.display = 'none';
+            
+            // Clear chat messages
+            chatMessages.innerHTML = `
+                <div class="message bot-message">
+                    <div class="message-text">
+                        Hello! I'm your IT Support Assistant. I'll create a support ticket for your issue.<br>
+                        <small>Please fill in all the fields below and describe your IT issue.</small>
+                    </div>
+                </div>
+            `;
+            
+            // Hide service status indicator
+            serviceStatus.classList.remove('show');
+        }
+        
+        // Core Functions
+        function addMessage(message, isUser = false, senderName = '', attachments = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            
+            if (isUser && senderName) {
+                const senderInfo = document.createElement('div');
+                senderInfo.className = 'sender-info';
+                senderInfo.style.justifyContent = 'flex-end';
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'sender-avatar';
+                avatar.textContent = senderName.charAt(0).toUpperCase();
+                
+                const nameLabel = document.createElement('div');
+                nameLabel.textContent = senderName;
+                nameLabel.style.fontSize = '12px';
+                nameLabel.style.color = 'var(--text-secondary)';
+                
+                senderInfo.appendChild(nameLabel);
+                senderInfo.appendChild(avatar);
+                messageDiv.appendChild(senderInfo);
+            }
+            
+            const messageText = document.createElement('div');
+            messageText.className = 'message-text';
+            messageText.innerHTML = message;
+            
+            messageDiv.appendChild(messageText);
+            
+            // Add attachments if any
+            if (attachments && attachments.length > 0) {
+                const attachmentsDiv = document.createElement('div');
+                attachmentsDiv.className = 'message-attachments';
+                
+                attachments.forEach(attachment => {
+                    const attachmentDiv = document.createElement('div');
+                    attachmentDiv.className = 'message-attachment';
+                    attachmentDiv.title = attachment.name;
+                    
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = `message-attachment-icon ${getFileIconClass(attachment.type)}`;
+                    iconDiv.textContent = getFileIconText(attachment.type);
+                    
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'message-attachment-name';
+                    nameDiv.textContent = attachment.name;
+                    
+                    attachmentDiv.appendChild(iconDiv);
+                    attachmentDiv.appendChild(nameDiv);
+                    
+                    // Add click event to download/view attachment
+                    attachmentDiv.addEventListener('click', () => {
+                        downloadAttachment(attachment);
+                    });
+                    
+                    attachmentsDiv.appendChild(attachmentDiv);
+                });
+                
+                messageDiv.appendChild(attachmentsDiv);
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function hideTypingIndicator() {
+            typingIndicator.style.display = 'none';
+        }
+        
+        function determinePriority(issue) {
+            const issueLower = issue.toLowerCase();
+            
+            for (const [priority, keywords] of Object.entries(priorityKeywords)) {
+                for (const keyword of keywords) {
+                    if (issueLower.includes(keyword)) {
+                        return priority;
+                    }
+                }
+            }
+            
+            return "medium"; // Default priority
+        }
+        
+        function generateTicketId() {
+            const timestamp = Date.now().toString(36);
+            const randomStr = Math.random().toString(36).substring(2, 5);
+            return `TKT-${timestamp}-${randomStr}`.toUpperCase();
+        }
+        
+        // Calculate SLA deadline
+        function calculateSLADeadline() {
+            const now = new Date();
+            const deadline = new Date(now.getTime() + SLA_DURATION_MINUTES * 60000);
+            return deadline;
+        }
+        
+        // Format date for display
+        function formatDate(date) {
+            return new Date(date).toLocaleString();
+        }
+        
+        // Format time remaining for SLA
+        function formatTimeRemaining(deadline) {
+            const now = new Date();
+            const diff = deadline - now;
+            
+            if (diff <= 0) {
+                return "Expired";
+            }
+            
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(minutes / 60);
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes % 60}m`;
+            } else {
+                return `${minutes}m`;
+            }
+        }
+        
+        // Get SLA urgency level based on time remaining
+        function getSLAUrgency(deadline) {
+            const now = new Date();
+            const diff = deadline - now;
+            const minutes = Math.floor(diff / 60000);
+            
+            if (minutes <= 5) {
+                return "low";
+            } else if (minutes <= 15) {
+                return "medium";
+            } else {
+                return "high";
+            }
+        }
+        
+        // Calculate SLA progress percentage
+        function calculateSLAProgress(deadline) {
+            const now = new Date();
+            const created = new Date(deadline.getTime() - SLA_DURATION_MINUTES * 60000);
+            const total = deadline - created;
+            const remaining = deadline - now;
+            
+            if (remaining <= 0) {
+                return 100;
+            }
+            
+            return Math.min(100, Math.max(0, 100 - (remaining / total) * 100));
+        }
+        
+        // Create SLA indicator HTML
+        function createSLAIndicator(deadline) {
+            const urgency = getSLAUrgency(deadline);
+            const progress = calculateSLAProgress(deadline);
+            const timeRemaining = formatTimeRemaining(deadline);
+            
+            return `
+                <div class="sla-indicator">
+                    <div class="sla-progress ${urgency}" style="width: ${progress}%"></div>
+                </div>
+                <div class="sla-time">
+                    <span class="sla-remaining">Time remaining: ${timeRemaining}</span>
+                    <span class="sla-deadline">Deadline: ${formatDate(deadline)}</span>
+                </div>
+            `;
+        }
+        
+        // Initialize SLA timers for open tickets
+        async function initializeSLATimers() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    
+                    tickets.forEach(ticket => {
+                        if (ticket.sender === currentUserName && ticket.status === 'open' && ticket.slaDeadline) {
+                            setupSLATimer(ticket);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error initializing SLA timers:', error);
+            }
+        }
+        
+        // Setup SLA timer for a ticket
+        function setupSLATimer(ticket) {
+            const deadline = new Date(ticket.slaDeadline);
+            const now = new Date();
+            
+            // Clear existing timer if any
+            if (slaTimers[ticket.id]) {
+                if (slaTimers[ticket.id].interval) clearInterval(slaTimers[ticket.id].interval);
+                if (slaTimers[ticket.id].timeout) clearTimeout(slaTimers[ticket.id].timeout);
+            }
+            
+            // Calculate time remaining in minutes
+            const diff = deadline - now;
+            const minutes = Math.floor(diff / 60000);
+            
+            // Set up interval to update SLA indicator every minute
+            const interval = setInterval(() => {
+                updateSLAIndicator(ticket.id);
+            }, 60000);
+            
+            // Set up reminders at specific intervals
+            SLA_REMINDER_MINUTES.forEach(reminderMinutes => {
+                if (minutes > reminderMinutes) {
+                    const reminderTime = deadline.getTime() - reminderMinutes * 60000;
+                    const timeout = setTimeout(() => {
+                        sendSLAReminder(ticket, reminderMinutes);
+                    }, reminderTime - now.getTime());
+                    
+                    // Store timeout reference
+                    if (!slaTimers[ticket.id]) {
+                        slaTimers[ticket.id] = {};
+                    }
+                    slaTimers[ticket.id].timeout = timeout;
+                }
+            });
+            
+            // Store interval reference
+            if (!slaTimers[ticket.id]) {
+                slaTimers[ticket.id] = {};
+            }
+            slaTimers[ticket.id].interval = interval;
+            
+            // Update SLA indicator immediately
+            updateSLAIndicator(ticket.id);
+        }
+        
+        // Update SLA indicator for a ticket
+        async function updateSLAIndicator(ticketId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets/${ticketId}`);
+                if (response.ok) {
+                    const ticket = await response.json();
+                    
+                    // Find the ticket message in the chat
+                    const ticketMessages = document.querySelectorAll('.message');
+                    for (const message of ticketMessages) {
+                        const messageText = message.querySelector('.message-text');
+                        if (messageText && messageText.innerHTML.includes(`Ticket #${ticketId}`)) {
+                            // Check if SLA indicator already exists
+                            let slaIndicator = message.querySelector('.sla-indicator');
+                            if (!slaIndicator) {
+                                // Create and add SLA indicator
+                                const slaHtml = createSLAIndicator(new Date(ticket.slaDeadline));
+                                const slaContainer = document.createElement('div');
+                                slaContainer.innerHTML = slaHtml;
+                                messageText.appendChild(slaContainer);
+                            } else {
+                                // Update existing SLA indicator
+                                const deadline = new Date(ticket.slaDeadline);
+                                const urgency = getSLAUrgency(deadline);
+                                const progress = calculateSLAProgress(deadline);
+                                const timeRemaining = formatTimeRemaining(deadline);
+                                
+                                const progressBar = slaIndicator.querySelector('.sla-progress');
+                                progressBar.className = `sla-progress ${urgency}`;
+                                progressBar.style.width = `${progress}%`;
+                                
+                                const timeElement = message.querySelector('.sla-remaining');
+                                if (timeElement) {
+                                    timeElement.textContent = `Time remaining: ${timeRemaining}`;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating SLA indicator:', error);
+            }
+        }
+        
+        // Send SLA reminder notification
+        function sendSLAReminder(ticket, minutesRemaining) {
+            if (!notificationPrefs.slaReminders || isQuietHours()) {
+                return;
+            }
+            
+            const message = `Reminder: Your ticket #${ticket.id} has ${minutesRemaining} minutes remaining before SLA deadline. Issue: "${ticket.issue}"`;
+            
+            // Show in-app notification
+            showNotification(message, 'warning');
+            
+            // Show desktop notification
+            showDesktopNotification("SLA Reminder", message);
+            
+            // Add message to chat
+            const reminderMessage = `
+                <div class='ticket-assignment'>
+                    <div class='ticket-assignment-header'>SLA Reminder</div>
+                    <div class='ticket-assignment-details'>
+                        Your ticket ${ticket.id} has ${minutesRemaining} minutes remaining before SLA deadline.
+                    </div>
+                </div>
+            `;
+            
+            addMessage(reminderMessage, false);
+        }
+        
+        // File attachment functions
+        function getFileIconClass(fileType) {
+            if (fileType.startsWith('image/')) {
+                return 'image';
+            } else if (fileType === 'application/pdf') {
+                return 'pdf';
+            } else if (fileType.includes('document') || fileType.includes('text')) {
+                return 'document';
+            } else {
+                return 'default';
+            }
+        }
+        
+        function getFileIconText(fileType) {
+            if (fileType.startsWith('image/')) {
+                return '🖼️';
+            } else if (fileType === 'application/pdf') {
+                return '📄';
+            } else if (fileType.includes('document') || fileType.includes('text')) {
+                return '📝';
+            } else {
+                return '📎';
+            }
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function handleFileSelection(files) {
+            if (files.length === 0) return;
+            
+            // Show file attachment container
+            fileAttachmentContainer.style.display = 'flex';
+            
+            // Process each file
+            Array.from(files).forEach(file => {
+                // Add to attached files array
+                attachedFiles.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    file: file
+                });
+                
+                // Create file attachment element
+                const fileAttachment = document.createElement('div');
+                fileAttachment.className = 'file-attachment';
+                
+                const fileIcon = document.createElement('div');
+                fileIcon.className = `file-icon ${getFileIconClass(file.type)}`;
+                fileIcon.textContent = getFileIconText(file.type);
+                
+                const fileInfo = document.createElement('div');
+                fileInfo.className = 'file-info';
+                
+                const fileName = document.createElement('div');
+                fileName.className = 'file-name';
+                fileName.textContent = file.name;
+                
+                const fileSize = document.createElement('div');
+                fileSize.className = 'file-size';
+                fileSize.textContent = formatFileSize(file.size);
+                
+                fileInfo.appendChild(fileName);
+                fileInfo.appendChild(fileSize);
+                
+                const fileRemove = document.createElement('button');
+                fileRemove.className = 'file-remove';
+                fileRemove.innerHTML = '×';
+                fileRemove.addEventListener('click', () => {
+                    // Remove from attached files array
+                    attachedFiles = attachedFiles.filter(f => f.name !== file.name);
+                    
+                    // Remove from UI
+                    fileAttachment.remove();
+                    
+                    // Hide container if no files left
+                    if (attachedFiles.length === 0) {
+                        fileAttachmentContainer.style.display = 'none';
+                    }
+                });
+                
+                fileAttachment.appendChild(fileIcon);
+                fileAttachment.appendChild(fileInfo);
+                fileAttachment.appendChild(fileRemove);
+                
+                fileAttachmentContainer.appendChild(fileAttachment);
+            });
+        }
+        
+        function downloadAttachment(attachment) {
+            // In a real implementation, this would download the file from the server
+            // For now, we'll create a download link for the file object
+            const url = URL.createObjectURL(attachment.file);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = attachment.name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        async function createTicket(issue, sender, floor, department, machineName, attachments = null) {
+            const ticket = {
+                id: generateTicketId(),
+                issue: issue,
+                sender: sender || "Anonymous",
+                floor: floor || "Unknown",
+                department: department || "Unknown",
+                machineName: machineName || "Unknown",
+                priority: determinePriority(issue),
+                status: "open",
+                created: new Date().toISOString(),
+                slaDeadline: calculateSLADeadline().toISOString(),
+                assignedTo: null,
+                assignedToId: null,
+                requestStatus: null,
+                resolvedAt: null,
+                resolvedBy: null,
+                resolutionDescription: null,
+                userNotified: false,
+                userAcknowledged: false,
+                assignmentNotified: false,
+                resolutionNotified: false,
+                attachments: attachments || []
+            };
+            
+            try {
+                console.log('Creating ticket with data:', ticket);
+                
+                const response = await fetch(`${API_BASE_URL}/tickets`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(ticket)
+                });
+                
+                if (response.ok) {
+                    const createdTicket = await response.json();
+                    console.log('Ticket created successfully:', createdTicket);
+                    showNotification(`Ticket ${createdTicket.id} created successfully`);
+                    
+                    // Setup SLA timer for the new ticket
+                    setupSLATimer(createdTicket);
+                    
+                    return createdTicket;
+                } else {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error creating ticket:', error);
+                showNotification('Error creating ticket. Please try again.', 'error');
+                return null;
+            }
+        }
+        
+        function processUserInput(issue, sender, floor, department, machineName, attachments = null) {
+            // Always create a ticket for any input
+            createTicket(issue, sender, floor, department, machineName, attachments).then(ticket => {
+                if (ticket) {
+                    // Format the creation time
+                    const createdTime = new Date(ticket.created).toLocaleString();
+                    
+                    // Create SLA indicator
+                    const slaIndicator = createSLAIndicator(new Date(ticket.slaDeadline));
+                    
+                    // Return ticket creation message with timestamp and SLA indicator
+                    const response = {
+                        type: 'ticket',
+                        message: `I've created a support ticket for your issue.<br><div class='ticket-notice'>Ticket #${ticket.id} created<br><strong>From:</strong> ${ticket.sender}<br><strong>Machine:</strong> ${ticket.machineName}<br><strong>Location:</strong> ${ticket.floor}, ${ticket.department}<br><strong>Created at:</strong> ${createdTime}<br>Our IT team will contact you within 30 minutes.</div>${slaIndicator}`
+                    };
+                    
+                    addMessage(response.message, false, null, attachments);
+                }
+            });
+        }
+        
+        // FIXED: Ensure machineName is properly validated and captured
+        function sendMessage() {
+            const message = userInput.value.trim();
+            const sender = senderName.value.trim();
+            const floor = floorSelect.value.trim();
+            const department = departmentSelect.value.trim();
+            const machineName = machineNameInput.value.trim();
+            
+            if (message === '' && attachedFiles.length === 0) return;
+            
+            if (sender === '') {
+                addMessage("Please select your name before sending a message.", false);
+                return;
+            }
+            
+            if (floor === '') {
+                addMessage("Please select your floor before sending a message.", false);
+                return;
+            }
+            
+            if (department === '') {
+                addMessage("Please select your department before sending a message.", false);
+                return;
+            }
+            
+            if (machineName === '') {
+                addMessage("Please enter the computer name or machine number before sending a message.", false);
+                return;
+            }
+            
+            // Prepare attachments for sending
+            const attachmentsForSending = attachedFiles.map(file => ({
+                name: file.name,
+                size: file.size,
+                type: file.type
+                // In a real implementation, we would upload the file and get a URL
+            }));
+            
+            addMessage(message, true, sender, attachmentsForSending);
+            userInput.value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                // Make sure machineName is passed correctly
+                processUserInput(message, sender, floor, department, machineName, attachmentsForSending);
+                
+                // Clear attached files after sending
+                attachedFiles = [];
+                fileAttachmentContainer.style.display = 'none';
+                fileAttachmentContainer.innerHTML = '';
+            }, 1500);
+        }
+        
+        function showNotification(message, type = 'success') {
+            notification.textContent = message;
+            notification.className = 'notification';
+            
+            // Add type-specific classes
+            if (type === 'error') {
+                notification.style.background = '#e74c3c';
+            } else if (type === 'warning') {
+                notification.style.background = '#f39c12';
+            } else if (type === 'info') {
+                notification.style.background = '#3498db';
+            } else {
+                notification.style.background = '#2ecc71';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Function to check for ticket assignments and notify user
+        async function checkForTicketAssignments() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    
+                    tickets.forEach(ticket => {
+                        if (ticket.sender === currentUserName && ticket.assignedTo && !ticket.assignmentNotified) {
+                            showAssignmentNotification(ticket);
+                            markTicketAsNotified(ticket.id, 'assignmentNotified');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error checking ticket assignments:', error);
+            }
+        }
+        
+        // Function to show assignment notification
+        function showAssignmentNotification(ticket) {
+            const createdTime = new Date(ticket.created).toLocaleString();
+            
+            const message = `
+                <div class='ticket-assignment'>
+                    <div class='ticket-assignment-header'>Ticket Assignment Notification</div>
+                    <div class='ticket-assignment-details'>
+                        Your ticket ${ticket.id} for machine "${ticket.machineName}" has been assigned to "${ticket.assignedTo}". They will contact you shortly to resolve your issue: "${ticket.issue}".
+                    </div>
+                    <div class='ticket-meta'>Created: ${createdTime}</div>
+                </div>
+            `;
+            
+            addMessage(message, false);
+            
+            // If the page is hidden, show a desktop notification
+            if (document.hidden) {
+                showDesktopNotification("IT Support Update", `Your ticket ${ticket.id} for machine ${ticket.machineName} has been assigned to ${ticket.assignedTo}`);
+            }
+        }
+        
+        // Function to check for engineer acknowledgments and notify user
+        async function checkForEngineerAcknowledgments() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    
+                    tickets.forEach(ticket => {
+                        if (ticket.sender === currentUserName && ticket.requestStatus === 'acknowledged' && !ticket.userAcknowledged) {
+                            showAcknowledgmentNotification(ticket);
+                            markTicketAsNotified(ticket.id, 'userAcknowledged');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error checking engineer acknowledgments:', error);
+            }
+        }
+        
+        // Function to show acknowledgment notification
+        function showAcknowledgmentNotification(ticket) {
+            const createdTime = new Date(ticket.created).toLocaleString();
+            
+            const message = `
+                <div class='engineer-on-the-way'>
+                    <div class='engineer-avatar'>${getEngineerInitials(ticket.assignedTo)}</div>
+                    <div class='engineer-info'>
+                        <div class='engineer-name'>${ticket.assignedTo} is on their way</div>
+                        <div class='engineer-status'>to attend to your ticket regarding: "${ticket.issue}" on machine "${ticket.machineName}"</div>
+                        <div class='engineer-eta'>They will be with you shortly</div>
+                        <div class='ticket-meta'>Created: ${createdTime}</div>
+                    </div>
+                </div>
+            `;
+            
+            addMessage(message, false);
+            
+            // If the page is hidden, show a desktop notification
+            if (document.hidden) {
+                showDesktopNotification("IT Support Update", `${ticket.assignedTo} is on their way to help you with ticket #${ticket.id} for machine ${ticket.machineName}`);
+            }
+        }
+        
+        // Function to check for resolved tickets and notify user
+        async function checkForResolvedTickets() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    
+                    tickets.forEach(ticket => {
+                        if (ticket.sender === currentUserName && ticket.status === 'resolved' && !ticket.resolutionNotified) {
+                            showResolutionNotification(ticket);
+                            markTicketAsNotified(ticket.id, 'resolutionNotified');
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error checking resolved tickets:', error);
+            }
+        }
+        
+        // FIXED: Improved resolution notification with feedback option
+        function showResolutionNotification(ticket) {
+            const createdDate = new Date(ticket.created).toLocaleString();
+            const resolvedDate = new Date(ticket.resolvedAt).toLocaleString();
+            
+            const message = `
+                <div class='ticket-resolution'>
+                    <div class='ticket-resolution-header'>Issue Resolved</div>
+                    <div class='ticket-resolution-details'>
+                        Your ticket ${ticket.id} for machine "${ticket.machineName}" has been resolved by ${ticket.resolvedBy}. The issue "${ticket.issue}" has been fixed.
+                    </div>
+                    <div class='ticket-meta'>Created: ${createdDate} | Resolved: ${resolvedDate}</div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <button class="action-btn" onclick="showFeedbackModal('${ticket.id}')">Rate Our Service</button>
+                    </div>
+                </div>
+            `;
+            
+            addMessage(message, false);
+            
+            // If the page is hidden, show a desktop notification
+            if (document.hidden) {
+                showDesktopNotification("IT Support Update", `Your ticket ${ticket.id} for machine ${ticket.machineName} has been resolved by ${ticket.resolvedBy}`);
+            }
+            
+            // Clear SLA timer for this ticket
+            if (slaTimers[ticket.id]) {
+                if (slaTimers[ticket.id].interval) clearInterval(slaTimers[ticket.id].interval);
+                if (slaTimers[ticket.id].timeout) clearTimeout(slaTimers[ticket.id].timeout);
+                delete slaTimers[ticket.id];
+            }
+        }
+        
+        // Function to check for all ticket updates
+        async function checkForTicketUpdates() {
+            checkForTicketAssignments();
+            checkForEngineerAcknowledgments();
+            checkForResolvedTickets();
+        }
+        
+        // Function to mark ticket as notified
+        async function markTicketAsNotified(ticketId, notificationType) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets/${ticketId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ [notificationType]: true })
+                });
+                
+                if (!response.ok) {
+                    console.error('Failed to mark ticket as notified');
+                }
+            } catch (error) {
+                console.error('Error marking ticket as notified:', error);
+            }
+        }
+        
+        // Function to get engineer initials
+        function getEngineerInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').toUpperCase();
+        }
+        
+        // Ticket History Functions
+        async function loadTicketHistory() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                if (response.ok) {
+                    const tickets = await response.json();
+                    displayTicketHistory(tickets);
+                } else {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error loading ticket history:', error);
+                showNotification('Error loading ticket history. Please try again.', 'error');
+            }
+        }
+        
+        function displayTicketHistory(tickets) {
+            // Clear existing table rows
+            ticketTableBody.innerHTML = '';
+            
+            // Filter tickets for current user
+            const userTickets = tickets.filter(ticket => ticket.sender === currentUserName);
+            
+            // Apply filters
+            const statusFilter = ticketStatusFilter.value;
+            const searchTerm = ticketSearch.value.toLowerCase();
+            
+            let filteredTickets = userTickets;
+            
+            if (statusFilter !== 'all') {
+                filteredTickets = filteredTickets.filter(ticket => {
+                    if (statusFilter === 'in-progress') {
+                        return ticket.status === 'open' && ticket.assignedTo;
+                    }
+                    return ticket.status === statusFilter;
+                });
+            }
+            
+            if (searchTerm) {
+                filteredTickets = filteredTickets.filter(ticket => 
+                    ticket.id.toLowerCase().includes(searchTerm) || 
+                    ticket.issue.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Sort tickets by creation date (newest first)
+            filteredTickets.sort((a, b) => new Date(b.created) - new Date(a.created));
+            
+            // Display filtered tickets
+            if (filteredTickets.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td colspan="6" style="text-align: center; padding: 20px;">
+                        No tickets found matching your criteria.
+                    </td>
+                `;
+                ticketTableBody.appendChild(row);
+            } else {
+                filteredTickets.forEach(ticket => {
+                    const row = document.createElement('tr');
+                    
+                    // Format status
+                    let statusClass = 'open';
+                    let statusText = 'Open';
+                    
+                    if (ticket.status === 'resolved') {
+                        statusClass = 'resolved';
+                        statusText = 'Resolved';
+                    } else if (ticket.assignedTo) {
+                        statusClass = 'in-progress';
+                        statusText = 'In Progress';
+                    }
+                    
+                    // Format created date
+                    const createdDate = new Date(ticket.created).toLocaleString();
+                    
+                    // Create row HTML
+                    row.innerHTML = `
+                        <td class="ticket-id">${ticket.id}</td>
+                        <td>${ticket.issue}</td>
+                        <td><span class="ticket-status ${statusClass}">${statusText}</span></td>
+                        <td>${createdDate}</td>
+                        <td>${ticket.assignedTo || 'Unassigned'}</td>
+                        <td class="ticket-actions">
+                            ${ticket.status === 'resolved' ? 
+                                `<button class="ticket-action-btn ticket-reopen-btn" data-ticket-id="${ticket.id}">Reopen</button>` : 
+                                ''}
+                            <button class="ticket-action-btn ticket-view-btn" data-ticket-id="${ticket.id}">View</button>
+                        </td>
+                    `;
+                    
+                    ticketTableBody.appendChild(row);
+                });
+                
+                // Add event listeners to action buttons
+                document.querySelectorAll('.ticket-reopen-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const ticketId = e.target.getAttribute('data-ticket-id');
+                        reopenTicket(ticketId);
+                    });
+                });
+                
+                document.querySelectorAll('.ticket-view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const ticketId = e.target.getAttribute('data-ticket-id');
+                        viewTicket(ticketId);
+                    });
+                });
+            }
+        }
+        
+        async function reopenTicket(ticketId) {
+            try {
+                // Get ticket details
+                const response = await fetch(`${API_BASE_URL}/tickets/${ticketId}`);
+                if (response.ok) {
+                    const ticket = await response.json();
+                    
+                    // Update ticket status to open
+                    const updateResponse = await fetch(`${API_BASE_URL}/tickets/${ticketId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            status: 'open',
+                            resolvedAt: null,
+                            resolvedBy: null,
+                            resolutionDescription: null,
+                            slaDeadline: calculateSLADeadline().toISOString()
+                        })
+                    });
+                    
+                    if (updateResponse.ok) {
+                        showNotification(`Ticket ${ticketId} reopened successfully`);
+                        
+                        // Reload ticket history
+                        loadTicketHistory();
+                        
+                        // Setup SLA timer for the reopened ticket
+                        setupSLATimer(ticket);
+                        
+                        // Add message to chat
+                        const message = `
+                            <div class='ticket-assignment'>
+                                <div class='ticket-assignment-header'>Ticket Reopened</div>
+                                <div class='ticket-assignment-details'>
+                                    Your ticket ${ticketId} for machine "${ticket.machineName}" has been reopened. Our IT team will contact you within 30 minutes.
+                                </div>
+                            </div>
+                        `;
+                        
+                        addMessage(message, false);
+                    } else {
+                        throw new Error(`Server responded with status ${updateResponse.status}`);
+                    }
+                } else {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error reopening ticket:', error);
+                showNotification('Error reopening ticket. Please try again.', 'error');
+            }
+        }
+        
+        async function viewTicket(ticketId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets/${ticketId}`);
+                if (response.ok) {
+                    const ticket = await response.json();
+                    
+                    // Format dates
+                    const createdDate = new Date(ticket.created).toLocaleString();
+                    const resolvedDate = ticket.resolvedAt ? new Date(ticket.resolvedAt).toLocaleString() : 'N/A';
+                    
+                    // Create ticket details message
+                    let message = `
+                        <div class='ticket-assignment'>
+                            <div class='ticket-assignment-header'>Ticket Details: ${ticket.id}</div>
+                            <div class='ticket-assignment-details'>
+                                <strong>Issue:</strong> ${ticket.issue}<br>
+                                <strong>Status:</strong> ${ticket.status}<br>
+                                <strong>Priority:</strong> ${ticket.priority}<br>
+                                <strong>Created:</strong> ${createdDate}<br>
+                                <strong>Machine:</strong> ${ticket.machineName}<br>
+                                <strong>Location:</strong> ${ticket.floor}, ${ticket.department}<br>
+                                <strong>Assigned To:</strong> ${ticket.assignedTo || 'Unassigned'}<br>
+                                <strong>Resolved By:</strong> ${ticket.resolvedBy || 'N/A'}<br>
+                                <strong>Resolved At:</strong> ${resolvedDate}
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add resolution description if available
+                    if (ticket.resolutionDescription) {
+                        message += `
+                            <div class='ticket-resolution'>
+                                <div class='ticket-resolution-header'>Resolution Details</div>
+                                <div class='ticket-resolution-details'>
+                                    ${ticket.resolutionDescription}
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    // Add message to chat
+                    addMessage(message, false);
+                    
+                    // Close ticket history modal
+                    ticketHistoryModal.style.display = 'none';
+                } else {
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+            } catch (error) {
+                console.error('Error viewing ticket:', error);
+                showNotification('Error loading ticket details. Please try again.', 'error');
+            }
+        }
+        
+        // Sync function
+        async function syncWithServer() {
+            syncButton.style.transform = 'rotate(360deg)';
+            syncButton.style.transition = 'transform 0.5s';
+            
+            try {
+                // Check for ticket updates
+                await checkForTicketUpdates();
+                
+                // Check feedback service availability (but don't fail sync if it's down)
+                try {
+                    await checkFeedbackServiceAvailability();
+                } catch (e) {
+                    console.log('Feedback service check failed during sync, continuing...');
+                }
+                
+                // Sync pending feedback
+                await syncPendingFeedback();
+                
+                // Reload ticket history if modal is open
+                if (ticketHistoryModal.style.display === 'block') {
+                    await loadTicketHistory();
+                }
+                
+                showNotification('Synced successfully', 'success');
+            } catch (error) {
+                console.error('Sync failed:', error);
+                showNotification('Sync completed with some limitations', 'info');
+            } finally {
+                // Reset button rotation
+                setTimeout(() => {
+                    syncButton.style.transform = 'rotate(0deg)';
+                }, 500);
+            }
+        }
+        
+        // Modal functions
+        function openIssueModal() {
+            // Check if user is logged in and has selected name, floor, department, and machine name
+            if (!currentUser) {
+                addMessage("Please login first.", false);
+                return;
+            }
+            
+            const sender = senderName.value.trim();
+            const floor = floorSelect.value.trim();
+            const department = departmentSelect.value.trim();
+            const machineName = machineNameInput.value.trim();
+            
+            if (sender === '') {
+                addMessage("Please select your name before selecting an issue.", false);
+                return;
+            }
+            
+            if (floor === '') {
+                addMessage("Please select your floor before selecting an issue.", false);
+                return;
+            }
+            
+            if (department === '') {
+                addMessage("Please select your department before selecting an issue.", false);
+                return;
+            }
+            
+            if (machineName === '') {
+                addMessage("Please enter the computer name or machine number before selecting an issue.", false);
+                return;
+            }
+            
+            // Reset selected issue
+            selectedIssue = null;
+            issueItems.forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Show modal
+            issueModal.style.display = 'block';
+        }
+        
+        function closeIssueModal() {
+            issueModal.style.display = 'none';
+            selectedIssue = null;
+        }
+        
+        function openTicketHistoryModal() {
+            if (!currentUser) {
+                addMessage("Please login first.", false);
+                return;
+            }
+            
+            // Reset filters
+            ticketSearch.value = '';
+            ticketStatusFilter.value = 'all';
+            
+            // Load ticket history
+            loadTicketHistory();
+            
+            // Show modal
+            ticketHistoryModal.style.display = 'block';
+        }
+        
+        function closeTicketHistoryModal() {
+            ticketHistoryModal.style.display = 'none';
+        }
+        
+        function openNotificationPrefsModal() {
+            if (!currentUser) {
+                addMessage("Please login first.", false);
+                return;
+            }
+            
+            // Show modal
+            notificationPrefsModal.style.display = 'block';
+        }
+        
+        function closeNotificationPrefsModal() {
+            notificationPrefsModal.style.display = 'none';
+        }
+        
+        function handleIssueSelection(selectedIssueValue) {
+            const sender = senderName.value.trim();
+            const floor = floorSelect.value.trim();
+            const department = departmentSelect.value.trim();
+            const machineName = machineNameInput.value.trim();
+            
+            if (selectedIssueValue) {
+                if (sender === '') {
+                    addMessage("Please select your name before selecting an issue.", false);
+                    return;
+                }
+                
+                if (floor === '') {
+                    addMessage("Please select your floor before selecting an issue.", false);
+                    return;
+                }
+                
+                if (department === '') {
+                    addMessage("Please select your department before selecting an issue.", false);
+                    return;
+                }
+                
+                if (machineName === '') {
+                    addMessage("Please enter the computer name or machine number before selecting an issue.", false);
+                    return;
+                }
+                
+                // Add the selected issue as a user message
+                addMessage(selectedIssueValue, true, sender);
+                
+                // Process the selected issue
+                showTypingIndicator();
+                
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    processUserInput(selectedIssueValue, sender, floor, department, machineName);
+                }, 1500);
+            }
+        }
+        
+        // Feedback Modal Functions
+        function showFeedbackModal(ticketId) {
+            currentTicketId = ticketId;
+            
+            // Reset form
+            selectedRating = null;
+            document.querySelectorAll('.rating-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            feedbackComment.value = '';
+            charCount.textContent = '0';
+            feedbackSubmit.disabled = true;
+            feedbackSuccess.style.display = 'none';
+            document.querySelector('.feedback-form').style.display = 'block';
+            
+            // Show modal
+            feedbackModal.style.display = 'block';
+        }
+        
+        function closeFeedbackModal() {
+            feedbackModal.style.display = 'none';
+        }
+        
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize theme
+            initializeTheme();
+            
+            // Initialize notification preferences
+            initializeNotificationPreferences();
+            
+            // Initialize service status
+            initializeServiceStatus();
+            
+            // Initialize mobile app
+            initializeMobileApp();
+            
+            // Request notification permission on page load
+            if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+                Notification.requestPermission();
+            }
+            
+            // Connect WebSocket
+            connectWebSocket();
+            
+            // Start polling as fallback
+            startPolling();
+            
+            // Theme toggle event listener
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Sync button event listener
+            syncButton.addEventListener('click', syncWithServer);
+            
+            // Mobile navigation event listeners
+            mobileMenuBtn.addEventListener('click', toggleMobileNav);
+            mobileNavOverlay.addEventListener('click', closeMobileNav);
+            mobileHome.addEventListener('click', () => {
+                closeMobileNav();
+                if (chatContainer.style.display === 'none') {
+                    loginContainer.style.display = 'flex';
+                }
+            });
+            mobileTickets.addEventListener('click', () => {
+                closeMobileNav();
+                openTicketHistoryModal();
+            });
+            mobileNotifications.addEventListener('click', () => {
+                closeMobileNav();
+                openNotificationPrefsModal();
+            });
+            mobileSettings.addEventListener('click', () => {
+                closeMobileNav();
+                openNotificationPrefsModal();
+            });
+            mobileLogout.addEventListener('click', () => {
+                closeMobileNav();
+                logout();
+            });
+            
+            // Login functionality
+            loginBtn.addEventListener('click', login);
+            
+            userIdInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    passwordInput.focus();
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    login();
+                }
+            });
+            
+            // Logout functionality
+            logoutBtn.addEventListener('click', logout);
+            
+            // Ticket history button
+            ticketHistoryBtn.addEventListener('click', openTicketHistoryModal);
+            
+            // Notification preferences button
+            notificationPrefsBtn.addEventListener('click', openNotificationPrefsModal);
+            
+            // Chat functionality
+            sendBtn.addEventListener('click', sendMessage);
+            
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Select issue button
+            selectIssueBtn.addEventListener('click', openIssueModal);
+            
+            // File attachment functionality
+            fileAttachmentBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                handleFileSelection(e.target.files);
+            });
+            
+            // Update current user name when sender name changes
+            senderName.addEventListener('change', (e) => {
+                currentUserName = e.target.value;
+            });
+            
+            // Modal event listeners
+            modalClose.forEach(closeBtn => {
+                closeBtn.addEventListener('click', (e) => {
+                    const modal = e.target.closest('.modal, .ticket-history-modal, .notification-prefs-modal, #feedback-modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            modalCancel.addEventListener('click', closeIssueModal);
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal') || 
+                    e.target.classList.contains('ticket-history-modal') || 
+                    e.target.classList.contains('notification-prefs-modal') ||
+                    e.target.id === 'feedback-modal') {
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            // Issue item selection
+            issueItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Remove selected class from all items
+                    issueItems.forEach(i => i.classList.remove('selected'));
+                    
+                    // Add selected class to clicked item
+                    item.classList.add('selected');
+                    
+                    // Store selected issue value
+                    selectedIssue = item.getAttribute('data-value');
+                });
+            });
+            
+            // Modal confirm button
+            modalConfirm.addEventListener('click', () => {
+                if (selectedIssue) {
+                    handleIssueSelection(selectedIssue);
+                    closeIssueModal();
+                } else {
+                    showNotification('Please select an issue', 'warning');
+                }
+            });
+            
+            // Ticket history filters
+            ticketSearch.addEventListener('input', () => {
+                loadTicketHistory();
+            });
+            
+            ticketStatusFilter.addEventListener('change', () => {
+                loadTicketHistory();
+            });
+            
+            // Notification preferences modal
+            prefsCancelBtn.addEventListener('click', closeNotificationPrefsModal);
+            
+            prefsSaveBtn.addEventListener('click', () => {
+                saveNotificationPreferences();
+                closeNotificationPrefsModal();
+                showNotification('Notification preferences saved', 'success');
+            });
+            
+            // Feedback modal event listeners
+            // Rating selection
+            ratingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    ratingOptions.forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Set selected rating
+                    selectedRating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Enable submit button
+                    feedbackSubmit.disabled = false;
+                });
+            });
+            
+            // Character counter
+            feedbackComment.addEventListener('input', function() {
+                const count = this.value.length;
+                charCount.textContent = count;
+            });
+            
+            // Submit feedback with improved error handling
+            feedbackSubmit.addEventListener('click', async function() {
+                if (!selectedRating) {
+                    showNotification('Please select a rating', 'warning');
+                    return;
+                }
+                
+                const comment = feedbackComment.value;
+                
+                // Prepare feedback data
+                const feedback = {
+                    ticketId: currentTicketId,
+                    rating: selectedRating,
+                    comment: comment,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Disable submit button and show loading state
+                feedbackSubmit.disabled = true;
+                const originalText = feedbackSubmit.textContent;
+                feedbackSubmit.innerHTML = '<span class="loading-spinner"></span>Submitting...';
+                
+                try {
+                    // Submit feedback to API with retry logic
+                    const result = await submitFeedbackWithRetry(feedback);
+                    
+                    // Always show success since we save locally if needed
+                    // Hide form and show success message
+                    document.querySelector('.feedback-form').style.display = 'none';
+                    feedbackSuccess.style.display = 'block';
+                    
+                    // Close modal after 2 seconds
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                    
+                    // Show notification with appropriate message
+                    if (result.message && result.message.includes('locally')) {
+                        showNotification('Thank you for your feedback! Saved locally for sync.', 'info');
+                    } else {
+                        showNotification('Thank you for your feedback!', 'success');
+                    }
+                    
+                } catch (error) {
+                    console.error('Error submitting feedback:', error);
+                    
+                    // Even if there's an error, we've saved locally so show success
+                    document.querySelector('.feedback-form').style.display = 'none';
+                    feedbackSuccess.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        closeFeedbackModal();
+                    }, 2000);
+                    
+                    showNotification('Thank you for your feedback! Saved locally for sync.', 'info');
+                }
+            });
+            
+            // Also check when the page becomes visible
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && currentUser) {
+                    checkForTicketUpdates();
+                    checkFeedbackServiceAvailability();
+                    syncPendingFeedback();
+                }
+            });
+            
+            // Also check when network connection is restored
+            window.addEventListener('online', function() {
+                if (currentUser) {
+                    checkForTicketUpdates();
+                    checkFeedbackServiceAvailability();
+                    syncPendingFeedback();
+                }
+            });
+            
+            // Periodic sync for pending feedback (every 5 minutes)
+            setInterval(() => {
+                if (currentUser) {
+                    syncPendingFeedback();
+                }
+            }, 300000);
+            
+            // Handle app install
+            window.addEventListener('appinstalled', () => {
+                pwaInstallBanner.classList.remove('show');
+                showNotification('App installed successfully!', 'success');
+            });
+        });
+    </script>
+</body>
+</html>
